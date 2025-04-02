@@ -7,7 +7,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.io.File;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -40,7 +39,16 @@ public class Book {
 
     private boolean featured = false;
 
+    @Column(nullable = false, updatable = false)
     private LocalDateTime createDate;
+
+
+    @PrePersist
+    protected void onCreate() {
+        this.createDate = LocalDateTime.now();
+    }
+
+
 
     private boolean builtIn = false;
 
