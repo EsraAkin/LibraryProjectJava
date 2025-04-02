@@ -11,11 +11,13 @@ import com.library.demo.payload.response.businnes.BookResponse;
 import com.library.demo.payload.response.businnes.ResponseMessage;
 import com.library.demo.repository.businnes.BookRepository;
 import com.library.demo.service.validator.UniquePropertyValidator;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import javax.validation.Valid;
 
 @Service
 @RequiredArgsConstructor
@@ -52,4 +54,13 @@ public class BookService {
 
 
     }
+
+
+
+    public Page<BookResponse> getBooks(String q, Long cat, Long author, Long publisher, Pageable pageable) {
+
+        Page<Book> books = bookRepository.searchBooks(q, cat, author, publisher,  pageable);
+        return books.map(bookMappers::mapBookToBookResponse);
+    }
+
 }
