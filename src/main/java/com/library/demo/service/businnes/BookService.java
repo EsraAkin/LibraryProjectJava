@@ -12,6 +12,7 @@ import com.library.demo.payload.request.businnes.BookRequest;
 import com.library.demo.payload.response.businnes.BookResponse;
 import com.library.demo.payload.response.businnes.ResponseMessage;
 import com.library.demo.repository.businnes.BookRepository;
+import com.library.demo.service.helper.MethodHelper;
 import com.library.demo.service.validator.UniquePropertyValidator;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -31,6 +32,7 @@ public class BookService {
     private final AuthorService authorService;
     private final PublisherService publisherService;
     private final UniquePropertyValidator uniquePropertyValidator;
+    private final MethodHelper methodHelper;
 
 
     public ResponseMessage<BookResponse> saveBook(@Valid BookRequest bookRequest) {
@@ -97,5 +99,22 @@ public class BookService {
                 .message(SuccessMessages.BOOK_UPDATE)
                 .httpStatus(HttpStatus.OK)
                 .build();
+    }
+
+    public ResponseMessage<BookResponse> deleteBookById(Long bookId) {
+
+        Book book = findBookById(bookId);
+
+        methodHelper.validateBookCanBeDeleted(book);
+
+        bookRepository.delete(book);
+
+        return ResponseMessage.<BookResponse>builder()
+                .message(SuccessMessages.BOOK_DELETE)
+                .httpStatus(HttpStatus.OK)
+                .returnBody(bookMappers.mapBookToBookResponse(book))
+                .build();
+
+
     }
 }

@@ -61,11 +61,11 @@ public class BookController {
     }
 
 
-
+    //TODO ödünç verilmiş kitap için de test et.
     @DeleteMapping("/delete/{book_Id}")
     public ResponseMessage<BookResponse> deleteBook(@PathVariable Long book_Id) {
-        //return bookService.deleteBookById(book_Id);
-        return null;
+       return bookService.deleteBookById(book_Id);
+
     }
 
 }
