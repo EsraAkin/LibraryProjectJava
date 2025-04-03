@@ -45,6 +45,11 @@ public class BookController {
     }
 
 
+    @GetMapping("getBookById/{bookId}")
+    public ResponseMessage<BookResponse> getBookId(@PathVariable Long bookId){
+        return bookService.getBookById(bookId);
+
+    }
 
     @DeleteMapping("/delete/{book_Id}")
     public ResponseMessage<BookResponse> deleteBook(@PathVariable Long book_Id) {

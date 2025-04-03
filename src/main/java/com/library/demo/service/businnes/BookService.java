@@ -4,7 +4,9 @@ import com.library.demo.entity.businnes.Author;
 import com.library.demo.entity.businnes.Book;
 import com.library.demo.entity.businnes.Category;
 import com.library.demo.entity.businnes.Publisher;
+import com.library.demo.exception.ResourceNotFoundException;
 import com.library.demo.payload.mappers.BookMappers;
+import com.library.demo.payload.messages.ErrorMessages;
 import com.library.demo.payload.messages.SuccessMessages;
 import com.library.demo.payload.request.businnes.BookRequest;
 import com.library.demo.payload.response.businnes.BookResponse;
@@ -51,8 +53,6 @@ public class BookService {
                 .message(SuccessMessages.BOOK_SAVE)
                 .httpStatus(HttpStatus.CREATED)
                 .build();
-
-
     }
 
 
@@ -63,4 +63,16 @@ public class BookService {
         return books.map(bookMappers::mapBookToBookResponse);
     }
 
+    public Book findBookById(Long id){
+       return bookRepository.findById(id).orElseThrow(()->new ResourceNotFoundException(ErrorMessages.BOOK_NOT_FOUND));
+
+    }
+
+    public ResponseMessage<BookResponse> getBookById(Long bookId) {
+        return ResponseMessage.<BookResponse>builder()
+                .returnBody(bookMappers.mapBookToBookResponse(findBookById(bookId)))
+                .message(SuccessMessages.BOOK_FOUND)
+                .httpStatus(HttpStatus.OK)
+                .build();
+    }
 }
