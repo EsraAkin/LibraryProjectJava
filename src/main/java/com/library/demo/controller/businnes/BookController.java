@@ -7,6 +7,8 @@ import com.library.demo.service.businnes.BookService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -50,6 +52,15 @@ public class BookController {
         return bookService.getBookById(bookId);
 
     }
+
+    @PutMapping("/{bookId}")
+    public ResponseEntity<ResponseMessage<BookResponse>> updateBook(@PathVariable Long bookId,
+                                                                    @RequestBody @Valid BookRequest bookRequest){
+        ResponseMessage<BookResponse> response = bookService.updateBook(bookId, bookRequest);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+
+
 
     @DeleteMapping("/delete/{book_Id}")
     public ResponseMessage<BookResponse> deleteBook(@PathVariable Long book_Id) {

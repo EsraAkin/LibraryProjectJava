@@ -49,6 +49,13 @@ public class Book {
     }
 
 
+    private LocalDateTime updateDate;
+
+    @PreUpdate
+    protected void onUpdate() {
+        this.updateDate = LocalDateTime.now();
+    }
+
 
     private boolean builtIn = false;
 

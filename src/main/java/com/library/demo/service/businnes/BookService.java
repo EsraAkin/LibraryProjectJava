@@ -56,15 +56,14 @@ public class BookService {
     }
 
 
-
     public Page<BookResponse> getBooks(String q, Long cat, Long author, Long publisher, Pageable pageable) {
 
-        Page<Book> books = bookRepository.searchBooks(q, cat, author, publisher,  pageable);
+        Page<Book> books = bookRepository.searchBooks(q, cat, author, publisher, pageable);
         return books.map(bookMappers::mapBookToBookResponse);
     }
 
-    public Book findBookById(Long id){
-       return bookRepository.findById(id).orElseThrow(()->new ResourceNotFoundException(ErrorMessages.BOOK_NOT_FOUND));
+    public Book findBookById(Long id) {
+        return bookRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(ErrorMessages.BOOK_NOT_FOUND));
 
     }
 
@@ -72,6 +71,30 @@ public class BookService {
         return ResponseMessage.<BookResponse>builder()
                 .returnBody(bookMappers.mapBookToBookResponse(findBookById(bookId)))
                 .message(SuccessMessages.BOOK_FOUND)
+                .httpStatus(HttpStatus.OK)
+                .build();
+    }
+
+
+    public ResponseMessage<BookResponse> updateBook(Long bookId, BookRequest bookRequest) {
+        Category category = categoryService.getCategoryById(bookRequest.getCategory());
+        Author author = authorService.getAuthorById(bookRequest.getAuthor());
+        Publisher publisher = publisherService.getPublisherById(bookRequest.getPublisher());
+
+        //exist Book in DB
+        Book bookFromDB = findBookById(bookId);
+
+        //validate unique prop
+        uniquePropertyValidator.checkUniqueProperty(bookFromDB, bookRequest);
+
+        //mapping
+        Book bookToSave = bookMappers.mapBookRequestToBook(bookRequest, author, publisher, category);
+        bookToSave.setId(bookId);
+
+        Book savedBook = bookRepository.save(bookToSave);
+        return ResponseMessage.<BookResponse>builder()
+                .returnBody(bookMappers.mapBookToBookResponse(savedBook))
+                .message(SuccessMessages.BOOK_UPDATE)
                 .httpStatus(HttpStatus.OK)
                 .build();
     }

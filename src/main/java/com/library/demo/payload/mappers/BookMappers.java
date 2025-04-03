@@ -43,7 +43,8 @@ public class BookMappers {
                 .shelfCode(book.getShelfCode())
                 .active(book.isActive())
                 .featured(book.isFeatured())
-                .createDate(book.getCreateDate().toString())
+                .createDate(book.getCreateDate() != null ? book.getCreateDate().toString() : "Date null")
+
                 .build();
     }
 
