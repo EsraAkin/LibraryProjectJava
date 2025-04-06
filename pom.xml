@@ -70,8 +70,6 @@
         </dependency>
 
 
-
-
         <!-- MapStruct Dependency ****************-->
         <dependency>
             <groupId>org.mapstruct</groupId>

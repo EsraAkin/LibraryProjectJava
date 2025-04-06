@@ -34,8 +34,10 @@ public class User {
 
     private LocalDate birthDate;
 
+    @Column(nullable = false, unique = true)
     private String email;
 
+    @Column(nullable = false)
     private String password;
 
     private LocalDateTime createDate;
@@ -44,13 +46,17 @@ public class User {
 
     private Boolean builtIn;
 
-    @OneToMany(mappedBy = "user")
+    // Loans borrowed by this user
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Loan> loans;
 
-    @ManyToMany
-    @JoinTable(name = "User_Role_tbl",
+    // Roles assigned to this user
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "user_role_tbl",
             joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id"))
+            inverseJoinColumns = @JoinColumn(name = "role_id")
+    )
     private List<Role> roles;
 
 }
