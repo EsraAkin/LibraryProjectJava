@@ -42,9 +42,16 @@ public class User {
 
     private LocalDateTime createDate;
 
+    @PrePersist
+    public void prePersist() {
+        this.createDate = LocalDateTime.now();
+    }
+
+
     private String resetPasswordCode;
 
-    private Boolean builtIn;
+    @Column(nullable = false)
+    private Boolean builtIn = false;
 
     // Loans borrowed by this user
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
