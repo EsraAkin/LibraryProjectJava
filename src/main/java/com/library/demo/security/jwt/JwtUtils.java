@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
+import javax.xml.bind.DatatypeConverter;
 import java.util.Date;
 
 @Component
@@ -63,12 +64,11 @@ public class JwtUtils {
 
   public String getUsernameFromToken(String token) {
     return Jwts.parser()
-        .setSigningKey(jwtSecret)
-        .parseClaimsJws(token)
-        .getBody()
-        .getSubject();
+            .setSigningKey(DatatypeConverter.parseBase64Binary(jwtSecret))
+            .parseClaimsJws(token)
+            .getBody()
+            .getSubject();
   }
-
 
 
 }

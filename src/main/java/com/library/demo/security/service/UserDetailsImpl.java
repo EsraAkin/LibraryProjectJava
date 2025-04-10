@@ -40,10 +40,10 @@ public class UserDetailsImpl implements UserDetails {
     return email;
   }
 
-  // Optional method to directly access email if needed elsewhere
-  public String getEmail() {
-    return email;
-  }
+//  // Optional method to directly access email if needed elsewhere
+//  public String getEmail() {
+//    return email;
+//  }
 
   @Override
   public String getPassword() {

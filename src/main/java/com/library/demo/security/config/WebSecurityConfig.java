@@ -32,8 +32,6 @@ public class WebSecurityConfig {
 
   private final JwtUtils jwtUtils;
 
-
-
   private final UserDetailServiceImpl userDetailService;
   private final AuthEntryPointJwt authEntryPointJwt;
 
@@ -57,11 +55,10 @@ public class WebSecurityConfig {
   }
 
   @Bean
-  public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
-    return configuration.getAuthenticationManager();
+  public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig) throws Exception {
+    return authConfig.getAuthenticationManager();
   }
 
-  // ✅ CORS yapılandırması - Spring Security 6.1+ için modern yöntem
   @Bean
   public CorsConfigurationSource corsConfigurationSource() {
     CorsConfiguration config = new CorsConfiguration();
@@ -103,6 +100,8 @@ public class WebSecurityConfig {
           "/js/**",
           "/contactMessages/save",
           "/auth/login",
-          "/auth/register"
+          "/auth/register",
+          "/auth/**"
+
   };
 }
