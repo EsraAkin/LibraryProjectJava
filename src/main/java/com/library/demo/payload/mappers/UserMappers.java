@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -18,8 +19,7 @@ public class UserMappers {
 
     private final PasswordEncoder passwordEncoder;
 
-
-    public User mapUserRequestToUser(UserRequest userRequest, Set<Role> roles){
+    public User mapUserRequestToUser(UserRequest userRequest, Set<Role> roles) {
         return User.builder()
                 .firstName(userRequest.getFirstName())
                 .lastName(userRequest.getLastName())
@@ -28,17 +28,16 @@ public class UserMappers {
                 .birthDate(userRequest.getBirthDate())
                 .email(userRequest.getEmail())
                 .password(passwordEncoder.encode(userRequest.getPassword()))
-                .roles(roles)
+                .roles(new ArrayList<>(roles)) // burada dönüşüm yapılıyor
                 .build();
     }
 
 
-    public UserResponse mapUserToUserResponse(User user){
+    public UserResponse mapUserToUserResponse(User user) {
         List<String> roleNames = user.getRoles()
                 .stream()
                 .map(Role::getName)
                 .collect(Collectors.toList());
-
 
         return UserResponse.builder()
                 .id(user.getId())
@@ -48,9 +47,7 @@ public class UserMappers {
                 .phone(user.getPhone())
                 .birthDate(user.getBirthDate())
                 .email(user.getEmail())
-                .roles(roleNames)
+                .roles(roleNames) // sadece bir kere mapledik
                 .build();
-
     }
-
 }

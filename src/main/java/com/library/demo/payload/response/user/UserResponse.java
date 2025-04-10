@@ -44,6 +44,6 @@ public class UserResponse {
 
     private List<Loan> loans;
 
-    private List<Role> roles;
+    private List<String> roles;
 
 }
