@@ -19,7 +19,7 @@ public class UserMappers {
 
     private final PasswordEncoder passwordEncoder;
 
-    public User mapUserRequestToUser(UserRequest userRequest, Set<Role> roles) {
+    public User mapUserRequestToUser(UserRequest userRequest) {
         return User.builder()
                 .firstName(userRequest.getFirstName())
                 .lastName(userRequest.getLastName())
@@ -28,7 +28,6 @@ public class UserMappers {
                 .birthDate(userRequest.getBirthDate())
                 .email(userRequest.getEmail())
                 .password(passwordEncoder.encode(userRequest.getPassword()))
-                .roles(new ArrayList<>(roles)) // burada dönüşüm yapılıyor
                 .build();
     }
 

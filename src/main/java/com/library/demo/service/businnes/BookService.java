@@ -13,7 +13,7 @@ import com.library.demo.payload.response.businnes.BookResponse;
 import com.library.demo.payload.response.businnes.ResponseMessage;
 import com.library.demo.repository.businnes.BookRepository;
 import com.library.demo.service.helper.MethodHelper;
-import com.library.demo.service.validator.UniquePropertyValidator;
+import com.library.demo.service.validator.BookUniquePropertyValidator;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -31,7 +31,7 @@ public class BookService {
     private final CategoryService categoryService;
     private final AuthorService authorService;
     private final PublisherService publisherService;
-    private final UniquePropertyValidator uniquePropertyValidator;
+    private final BookUniquePropertyValidator uniquePropertyValidator;
     private final MethodHelper methodHelper;
 
 

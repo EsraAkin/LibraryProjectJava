@@ -11,6 +11,9 @@ import org.springframework.stereotype.Component;
 
 import javax.xml.bind.DatatypeConverter;
 import java.util.Date;
+import java.util.stream.Collectors;
+import org.springframework.security.core.GrantedAuthority;
+
 
 @Component
 public class JwtUtils {
@@ -26,18 +29,19 @@ public class JwtUtils {
 
   public String generateToken(Authentication authentication) {
     UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
-    return buildTokenFromEmail(userDetails.getEmail());
+    return buildTokenFromUserDetails(userDetails);
+
   }
 
 
-  /**
-   *
-   * @param email of the user
-   * @return signed token with algorithm
-   */
-  private String buildTokenFromEmail(String email) {
+
+  private String buildTokenFromUserDetails(UserDetailsImpl userDetails) {
     return Jwts.builder()
-            .setSubject(email)
+            .setSubject(userDetails.getUsername())
+            .claim("roles", userDetails.getAuthorities()
+                    .stream()
+                    .map(GrantedAuthority::getAuthority)
+                    .collect(Collectors.toList()))
             .setIssuedAt(new Date())
             .setExpiration(new Date(new Date().getTime() + jwtExpirations))
             .signWith(SignatureAlgorithm.HS512, jwtSecret)

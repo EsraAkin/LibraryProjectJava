@@ -9,7 +9,9 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Data
@@ -25,12 +27,12 @@ public class UserDetailsImpl implements UserDetails {
   private List<GrantedAuthority> authorities;
 
   // Constructor to build UserDetailsImpl from User entity
-  public UserDetailsImpl(Long id, String email, String password, List<Role> roles) {
+  public UserDetailsImpl(Long id, String email, String password, Set<Role> roles) {
     this.id = id;
     this.email = email;
     this.password = password;
     this.authorities = roles.stream()
-            .map(role -> new SimpleGrantedAuthority(role.getName()))
+            .map(role -> new SimpleGrantedAuthority("ROLE_" + role.getName()))
             .collect(Collectors.toList());
   }
 
@@ -50,10 +52,12 @@ public class UserDetailsImpl implements UserDetails {
     return password;
   }
 
+
   @Override
-  public List<GrantedAuthority> getAuthorities() {
+  public Collection<? extends GrantedAuthority> getAuthorities() {
     return authorities;
   }
+
 
   @Override
   public boolean isAccountNonExpired() {

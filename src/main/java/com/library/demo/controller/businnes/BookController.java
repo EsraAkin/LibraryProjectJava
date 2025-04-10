@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -25,12 +26,23 @@ public class BookController {
 
     private final BookService bookService;
 
+
+    @GetMapping("/test/admin")
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
+    public String testAdmin() {
+        return "Hello Admin!";
+    }
+
+
     @PostMapping("/save")
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
+
     public ResponseMessage<BookResponse> saveBook(@RequestBody @Valid BookRequest bookRequest) {
         return bookService.saveBook(bookRequest);
     }
 
-    @GetMapping("/books")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'STAFF', 'MEMBER')")
+    @GetMapping
     public Page<BookResponse> getBooks(
             @RequestParam(required = false) String q,
             @RequestParam(required = false) Long cat,
@@ -47,12 +59,14 @@ public class BookController {
     }
 
 
-    @GetMapping("getBookById/{bookId}")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'STAFF', 'MEMBER')")
+    @GetMapping("/{bookId}")
     public ResponseMessage<BookResponse> getBookId(@PathVariable Long bookId){
         return bookService.getBookById(bookId);
 
     }
 
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
     @PutMapping("/{bookId}")
     public ResponseEntity<ResponseMessage<BookResponse>> updateBook(@PathVariable Long bookId,
                                                                     @RequestBody @Valid BookRequest bookRequest){
@@ -62,7 +76,8 @@ public class BookController {
 
 
     //TODO ödünç verilmiş kitap için de test et.
-    @DeleteMapping("/delete/{book_Id}")
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
+    @DeleteMapping("/{book_Id}")
     public ResponseMessage<BookResponse> deleteBook(@PathVariable Long book_Id) {
        return bookService.deleteBookById(book_Id);
 

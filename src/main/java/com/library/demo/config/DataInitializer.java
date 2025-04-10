@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
 
 @Component
 @RequiredArgsConstructor
@@ -42,7 +43,7 @@ public class DataInitializer implements CommandLineRunner {
                     .birthDate(LocalDate.of(1995, 1, 1))
                     .email("admin@example.com")
                     .password(passwordEncoder.encode("123456"))
-                    .roles(List.of(adminRole))
+                    .roles(Set.of(adminRole))
                     .builtIn(true)
                     .build();
 
