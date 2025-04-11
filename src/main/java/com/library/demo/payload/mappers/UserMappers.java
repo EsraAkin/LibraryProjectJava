@@ -28,6 +28,7 @@ public class UserMappers {
                 .birthDate(userRequest.getBirthDate())
                 .email(userRequest.getEmail())
                 .password(passwordEncoder.encode(userRequest.getPassword()))
+                .builtIn(false)
                 .build();
     }
 

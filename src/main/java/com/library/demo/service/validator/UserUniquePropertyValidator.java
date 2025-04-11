@@ -1,10 +1,8 @@
 package com.library.demo.service.validator;
 
-import com.library.demo.entity.businnes.Book;
 import com.library.demo.entity.user.User;
 import com.library.demo.exception.ConflictException;
 import com.library.demo.payload.messages.ErrorMessages;
-import com.library.demo.payload.request.businnes.BookRequest;
 import com.library.demo.payload.request.user.UserRequest;
 import com.library.demo.repository.user.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -38,11 +36,11 @@ public class UserUniquePropertyValidator {
     public void checkDublication(String phone, String email) {
 
         if (userRepository.existsByPhone(phone)) {
-            throw new ConflictException(String.format(ErrorMessages.ALREADY_REGISTER_MESSAGE_PHONE_NUMBER));
+            throw new ConflictException(String.format(ErrorMessages.ALREADY_REGISTER_MESSAGE_PHONE_NUMBER, phone));
         }
 
         if (userRepository.existsByEmail(email)) {
-            throw new ConflictException(String.format(ErrorMessages.ALREADY_REGISTER_MESSAGE_EMAIL));
+            throw new ConflictException(String.format(ErrorMessages.ALREADY_REGISTER_MESSAGE_EMAIL, email));
         }
 
     }

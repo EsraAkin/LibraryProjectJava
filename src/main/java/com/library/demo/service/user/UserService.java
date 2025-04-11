@@ -30,7 +30,7 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
 
 
-    public ResponseMessage<UserResponse> saveUser(@Valid UserRequest userRequest) {
+    public ResponseMessage<UserResponse> saveUser(UserRequest userRequest) {
         //validation
         userUniquePropertyValidator.checkDublication(userRequest.getPhone(), userRequest.getEmail());
 

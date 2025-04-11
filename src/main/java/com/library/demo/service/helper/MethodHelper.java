@@ -3,7 +3,6 @@ package com.library.demo.service.helper;
 import com.library.demo.entity.businnes.Book;
 import com.library.demo.entity.user.User;
 import com.library.demo.exception.ResourceNotFoundException;
-import com.library.demo.exception.UsernameNotFoundException;
 import com.library.demo.payload.messages.ErrorMessages;
 import com.library.demo.repository.businnes.BookRepository;
 import com.library.demo.repository.user.UserRepository;
@@ -28,6 +27,6 @@ public class MethodHelper {
 
     public User loadByEmail(String email) {
         return userRepository.findByEmail(email)
-                .orElseThrow(() -> new UsernameNotFoundException(ErrorMessages.NOT_FOUND_USER_MESSAGE_USERNAME));
+                .orElseThrow(() -> new ResourceNotFoundException(ErrorMessages.NOT_FOUND_USER_MESSAGE_USERNAME));
     }
 }

@@ -21,7 +21,7 @@ public class UserController {
     private final UserService userService;
 
 
-    @PreAuthorize("hasAnyAuthority('ADMIN', 'STAFF', 'MEMBER')")
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN', 'ROLE_STAFF', 'ROLE_MEMBER')")
     @PostMapping("/register")
     public ResponseMessage<UserResponse> saveUser(@RequestBody @Valid UserRequest userRequest) {
         return userService.saveUser(userRequest);

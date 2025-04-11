@@ -41,7 +41,8 @@ public class BookController {
         return bookService.saveBook(bookRequest);
     }
 
-    @PreAuthorize("hasAnyAuthority('ADMIN', 'STAFF', 'MEMBER')")
+    //TODO postman kontrol et
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN', 'ROLE_STAFF', 'ROLE_MEMBER')")
     @GetMapping
     public Page<BookResponse> getBooks(
             @RequestParam(required = false) String q,
@@ -59,14 +60,14 @@ public class BookController {
     }
 
 
-    @PreAuthorize("hasAnyAuthority('ADMIN', 'STAFF', 'MEMBER')")
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN', 'ROLE_STAFF', 'ROLE_MEMBER')")
     @GetMapping("/{bookId}")
     public ResponseMessage<BookResponse> getBookId(@PathVariable Long bookId){
         return bookService.getBookById(bookId);
 
     }
 
-    @PreAuthorize("hasAnyAuthority('ADMIN')")
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
     @PutMapping("/{bookId}")
     public ResponseEntity<ResponseMessage<BookResponse>> updateBook(@PathVariable Long bookId,
                                                                     @RequestBody @Valid BookRequest bookRequest){
@@ -76,7 +77,7 @@ public class BookController {
 
 
     //TODO ödünç verilmiş kitap için de test et.
-    @PreAuthorize("hasAnyAuthority('ADMIN')")
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
     @DeleteMapping("/{book_Id}")
     public ResponseMessage<BookResponse> deleteBook(@PathVariable Long book_Id) {
        return bookService.deleteBookById(book_Id);
