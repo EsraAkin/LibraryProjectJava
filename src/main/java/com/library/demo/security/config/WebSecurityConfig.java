@@ -102,7 +102,12 @@ public class WebSecurityConfig {
           "/contactMessages/save",
           "/auth/login",
           "/auth/register",
-          "/auth/**"
+          "/auth/**",
+          "/books/**",
+          "/books**",
+          "/books"
+
+
 
 
   };

@@ -1,5 +1,6 @@
 package com.library.demo.service.user;
 
+import com.library.demo.entity.businnes.Book;
 import com.library.demo.entity.user.Role;
 import com.library.demo.entity.user.User;
 import com.library.demo.exception.ResourceNotFoundException;
@@ -15,6 +16,8 @@ import com.library.demo.security.service.UserDetailsImpl;
 import com.library.demo.service.validator.UserUniquePropertyValidator;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -67,5 +70,11 @@ public class UserService {
                 .returnBody(userMappers.mapUserToUserResponse(user))
                 .httpStatus(HttpStatus.OK)
                 .build();
+    }
+
+    public Page<UserResponse> getPageableUser(Pageable pageable) {
+        Page<User> users = userRepository.findAll(pageable);
+        return users.map(userMappers::mapUserToUserResponse);
+
     }
 }

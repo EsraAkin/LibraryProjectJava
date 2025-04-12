@@ -16,13 +16,15 @@ public interface BookRepository extends JpaRepository<Book, Long> {
 
     @Query("""
     SELECT b FROM Book b
-    WHERE (:q IS NULL OR LOWER(b.name) LIKE LOWER(CONCAT('%', :q, '%'))
-                     OR LOWER(b.isbn) LIKE LOWER(CONCAT('%', :q, '%'))
-                     OR LOWER(b.author.name) LIKE LOWER(CONCAT('%', :q, '%'))
-                     OR LOWER(b.publisher.name) LIKE LOWER(CONCAT('%', :q, '%')))
-      AND (:cat IS NULL OR b.category.id = :cat)
-      AND (:author IS NULL OR b.author.id = :author)
-      AND (:publisher IS NULL OR b.publisher.id = :publisher)
+    WHERE 
+        ( :q IS NOT NULL OR :cat IS NOT NULL OR :author IS NOT NULL OR :publisher IS NOT NULL )
+        AND ( :q IS NULL OR LOWER(b.name) LIKE LOWER(CONCAT('%', :q, '%'))
+                      OR LOWER(b.isbn) LIKE LOWER(CONCAT('%', :q, '%'))
+                      OR LOWER(b.author.name) LIKE LOWER(CONCAT('%', :q, '%'))
+                      OR LOWER(b.publisher.name) LIKE LOWER(CONCAT('%', :q, '%')) )
+        AND ( :cat IS NULL OR b.category.id = :cat )
+        AND ( :author IS NULL OR b.author.id = :author )
+        AND ( :publisher IS NULL OR b.publisher.id = :publisher )
 """)
     Page<Book> searchBooks(
             @Param("q") String q,
@@ -31,6 +33,7 @@ public interface BookRepository extends JpaRepository<Book, Long> {
             @Param("publisher") Long publisher,
             Pageable pageable
     );
+
 
 
 

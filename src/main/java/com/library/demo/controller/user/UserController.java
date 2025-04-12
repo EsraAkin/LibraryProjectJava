@@ -1,18 +1,20 @@
 package com.library.demo.controller.user;
 
 import com.library.demo.payload.request.user.UserRequest;
+import com.library.demo.payload.response.businnes.BookResponse;
 import com.library.demo.payload.response.businnes.ResponseMessage;
 import com.library.demo.payload.response.user.UserResponse;
 import com.library.demo.service.user.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -34,6 +36,28 @@ public class UserController {
         return userService.getUserProfile(authentication);
 
     }
+
+
+    //TODO
+    /*/user/loans
+    post /user/loans?page=1&size=10&sort=createDate&type=desc
+    It will returnauthenticateduserloans */
+
+
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN', 'ROLE_STAFF')")
+    @GetMapping("/users")
+    public Page<UserResponse> getUsers(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "20") int size,
+            @RequestParam(defaultValue = "createDate") String sort,
+            @RequestParam(defaultValue = "desc") String type
+    ) {
+        Sort.Direction direction = type.equalsIgnoreCase("desc") ? Sort.Direction.DESC : Sort.Direction.ASC;
+        Pageable pageable = PageRequest.of(page, size, Sort.by(direction, sort));
+        return userService.getPageableUser(pageable);
+    }
+
+
 
 
 

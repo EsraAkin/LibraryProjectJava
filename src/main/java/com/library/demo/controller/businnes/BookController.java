@@ -42,7 +42,7 @@ public class BookController {
     }
 
     //TODO postman kontrol et
-    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN', 'ROLE_STAFF', 'ROLE_MEMBER')")
+
     @GetMapping
     public Page<BookResponse> getBooks(
             @RequestParam(required = false) String q,
