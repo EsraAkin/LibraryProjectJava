@@ -24,7 +24,6 @@ public class UserController {
     private final UserService userService;
 
 
-
     @PostMapping("/register")
     public ResponseMessage<UserResponse> saveUser(@RequestBody @Valid UserRequest userRequest) {
         return userService.saveUser(userRequest);
@@ -32,7 +31,7 @@ public class UserController {
 
     @PreAuthorize("hasAnyAuthority('ROLE_ADMIN', 'ROLE_STAFF', 'ROLE_MEMBER')")
     @PostMapping("/user")
-    public ResponseMessage<UserResponse>getAuthenticatedUser(Authentication authentication){
+    public ResponseMessage<UserResponse> getAuthenticatedUser(Authentication authentication) {
         return userService.getUserProfile(authentication);
 
     }
@@ -58,8 +57,12 @@ public class UserController {
     }
 
 
+    @GetMapping("/users/{userId}")
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN', 'ROLE_STAFF')")
+    public ResponseMessage<UserResponse> getUserById(@PathVariable @Valid Long userId) {
+        return userService.getUserById(userId);
 
-
+    }
 
 
 }

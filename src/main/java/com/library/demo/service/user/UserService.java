@@ -13,6 +13,7 @@ import com.library.demo.payload.response.user.UserResponse;
 import com.library.demo.repository.user.RoleRepository;
 import com.library.demo.repository.user.UserRepository;
 import com.library.demo.security.service.UserDetailsImpl;
+import com.library.demo.service.helper.MethodHelper;
 import com.library.demo.service.validator.UserUniquePropertyValidator;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -34,6 +35,7 @@ public class UserService {
     private final UserMappers userMappers;
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
+    private final MethodHelper methodHelper;
 
 
     public ResponseMessage<UserResponse> saveUser(UserRequest userRequest) {
@@ -75,6 +77,15 @@ public class UserService {
     public Page<UserResponse> getPageableUser(Pageable pageable) {
         Page<User> users = userRepository.findAll(pageable);
         return users.map(userMappers::mapUserToUserResponse);
+
+    }
+
+    public ResponseMessage<UserResponse> getUserById(@Valid Long userId) {
+        return ResponseMessage.<UserResponse>builder()
+                .message(SuccessMessages.USER_FOUND)
+                .returnBody(userMappers.mapUserToUserResponse(methodHelper.getUser(userId)))
+                .httpStatus(HttpStatus.OK)
+                .build();
 
     }
 }
