@@ -4,16 +4,19 @@ import com.library.demo.entity.user.Role;
 import com.library.demo.entity.user.User;
 import com.library.demo.exception.ResourceNotFoundException;
 import com.library.demo.payload.mappers.UserMappers;
+import com.library.demo.payload.messages.ErrorMessages;
 import com.library.demo.payload.messages.SuccessMessages;
 import com.library.demo.payload.request.user.UserRequest;
 import com.library.demo.payload.response.businnes.ResponseMessage;
 import com.library.demo.payload.response.user.UserResponse;
 import com.library.demo.repository.user.RoleRepository;
 import com.library.demo.repository.user.UserRepository;
+import com.library.demo.security.service.UserDetailsImpl;
 import com.library.demo.service.validator.UserUniquePropertyValidator;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -42,8 +45,6 @@ public class UserService {
                 .orElseThrow(() -> new RuntimeException("Default rol bulunamadı: MEMBER"));
         user.setRoles(Set.of(defaultRole));
 
-        // 4. Şifreyi encode et
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
 
         // 5. Kaydet
         User savedUser = userRepository.save(user);
@@ -53,6 +54,18 @@ public class UserService {
                 .message(SuccessMessages.USER_CREATE)
                 .returnBody(userMappers.mapUserToUserResponse(savedUser))
                 .httpStatus(HttpStatus.CREATED)
+                .build();
+    }
+
+    public ResponseMessage<UserResponse> getUserProfile(Authentication authentication) {
+
+        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+        User user=userRepository.findByEmail(userDetails.getEmail()).
+                orElseThrow(()->new ResourceNotFoundException(ErrorMessages.NOT_FOUND_USER_MESSAGE_EMAIL));
+        return ResponseMessage.<UserResponse>builder()
+                .message(SuccessMessages.USER_FOUND)
+                .returnBody(userMappers.mapUserToUserResponse(user))
+                .httpStatus(HttpStatus.OK)
                 .build();
     }
 }
