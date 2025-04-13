@@ -24,6 +24,8 @@ public class ErrorMessages {
   //user roles
   public static final String ROLE_NOT_FOUND = "There is no role like that, check the database";
   public static final String NOT_FOUND_USER_USER_ROLE_MESSAGE = "Error: User not found with user-role %s";
+  public static final String NOT_PERMITTED_USER_DELETE = "You are not authorized to delete this user.";
+  public static final String NOT_PERMITTED_ROLE_ASSIGN = "STAFF users can only assign MEMBER roles.";
 
 
   //book

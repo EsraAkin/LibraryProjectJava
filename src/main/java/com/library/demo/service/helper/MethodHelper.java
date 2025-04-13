@@ -48,6 +48,31 @@ public class MethodHelper {
         }
     }
 
+    public void validateUserUpdatePermission(User currentUser, User targetUser) {
+        boolean isAdmin = currentUser.getRoles().stream()
+                .anyMatch(role -> role.getName().equals("ADMIN"));
+
+        boolean isStaff = currentUser.getRoles().stream()
+                .anyMatch(role -> role.getName().equals("STAFF"));
+
+        // Admin her kullanıcıyı güncelleyebilir
+        if (isAdmin) return;
+
+        // Staff sadece MEMBER kullanıcılarını güncelleyebilir
+        if (isStaff && targetUser.getRoles().stream()
+                .allMatch(role -> role.getName().equals("MEMBER"))) {
+            return;
+        }
+
+        // Kullanıcı kendini güncelliyor mu?
+        if (currentUser.getId().equals(targetUser.getId())) {
+            return;
+        }
+
+        // Diğer durumlar: yetki yok
+        throw new SecurityException(ErrorMessages.NOT_PERMITTED_METHOD_MESSAGE);
+
+    }
 
 
 

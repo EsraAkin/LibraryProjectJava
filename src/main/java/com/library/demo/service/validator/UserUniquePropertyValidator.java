@@ -4,6 +4,7 @@ import com.library.demo.entity.user.User;
 import com.library.demo.exception.ConflictException;
 import com.library.demo.payload.messages.ErrorMessages;
 import com.library.demo.payload.request.user.UserRequest;
+import com.library.demo.payload.request.user.UserUpdateRequest;
 import com.library.demo.repository.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -44,6 +45,13 @@ public class UserUniquePropertyValidator {
         }
 
     }
+
+    public void checkUniqueProperty(User user, UserUpdateRequest request) {
+        if (!user.getPhone().equals(request.getPhone())) {
+            checkDublication(request.getPhone(), null);
+        }
+    }
+
 
 
 }

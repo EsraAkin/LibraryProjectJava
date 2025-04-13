@@ -3,6 +3,7 @@ package com.library.demo.payload.mappers;
 import com.library.demo.entity.user.Role;
 import com.library.demo.entity.user.User;
 import com.library.demo.payload.request.user.UserRequest;
+import com.library.demo.payload.request.user.UserUpdateRequest;
 import com.library.demo.payload.response.user.UserResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -50,4 +51,18 @@ public class UserMappers {
                 .roles(roleNames) // sadece bir kere mapledik
                 .build();
     }
+
+    public void updateUserFromUserUpdateRequest(UserUpdateRequest request, User user) {
+        user.setFirstName(request.getFirstName());
+        user.setLastName(request.getLastName());
+        user.setAddress(request.getAddress());
+        user.setPhone(request.getPhone());
+        user.setBirthDate(request.getBirthDate());
+    }
+
+
+
+
+
+
 }

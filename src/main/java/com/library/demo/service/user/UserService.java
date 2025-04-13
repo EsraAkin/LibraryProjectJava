@@ -8,6 +8,7 @@ import com.library.demo.payload.messages.ErrorMessages;
 import com.library.demo.payload.messages.SuccessMessages;
 import com.library.demo.payload.request.user.UserRequest;
 import com.library.demo.payload.request.user.UserSaveRequest;
+import com.library.demo.payload.request.user.UserUpdateRequest;
 import com.library.demo.payload.response.businnes.ResponseMessage;
 import com.library.demo.payload.response.user.UserResponse;
 import com.library.demo.repository.user.RoleRepository;
@@ -124,4 +125,36 @@ public class UserService {
                 .httpStatus(HttpStatus.CREATED)
                 .build();
     }
+
+
+    public ResponseMessage<UserResponse> updateUserById(@Valid UserUpdateRequest userUpdateRequest,
+                                                        Long userId,
+                                                        Authentication authentication) {
+
+        // Güncellenecek kullanıcıyı getir
+        User userToUpdate = methodHelper.getUser(userId);
+
+        // Giriş yapan kullanıcıyı getir
+        User currentUser = methodHelper.loadByEmail(
+                ((UserDetailsImpl) authentication.getPrincipal()).getEmail());
+
+        // Yetki kontrolü yap
+        methodHelper.validateUserUpdatePermission(currentUser, userToUpdate);
+
+        // 🔒 Benzersizlik kontrolü
+        userUniquePropertyValidator.checkUniqueProperty(userToUpdate, userUpdateRequest);
+
+        // Güncellenebilir alanları set et
+        userMappers.updateUserFromUserUpdateRequest(userUpdateRequest, userToUpdate);
+
+        // Güncellenmiş kullanıcıyı kaydet
+        User updatedUser = userRepository.save(userToUpdate);
+
+        return ResponseMessage.<UserResponse>builder()
+                .message(SuccessMessages.USER_UPDATE)
+                .httpStatus(HttpStatus.OK)
+                .returnBody(userMappers.mapUserToUserResponse(updatedUser))
+                .build();
+    }
+
 }

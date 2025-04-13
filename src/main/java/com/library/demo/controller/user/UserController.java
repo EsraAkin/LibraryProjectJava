@@ -2,6 +2,7 @@ package com.library.demo.controller.user;
 
 import com.library.demo.payload.request.user.UserRequest;
 import com.library.demo.payload.request.user.UserSaveRequest;
+import com.library.demo.payload.request.user.UserUpdateRequest;
 import com.library.demo.payload.response.businnes.ResponseMessage;
 import com.library.demo.payload.response.user.UserResponse;
 import com.library.demo.service.user.UserService;
@@ -70,6 +71,17 @@ public class UserController {
                                                           Authentication authentication) {
         return userService.saveUserWithRole(userSaveRequest, authentication);
     }
+
+    @PutMapping("/users/{user_id}")
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN', 'ROLE_STAFF', 'ROLE_MEMBER')")
+    public ResponseMessage<UserResponse> updateUserById(@Valid @RequestBody UserUpdateRequest userUpdateRequest,
+                                                        @PathVariable("user_id") Long userId,
+                                                        Authentication authentication) {
+        return userService.updateUserById(userUpdateRequest, userId, authentication);
+    }
+
+
+
 
 
 }
