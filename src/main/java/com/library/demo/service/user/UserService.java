@@ -1,6 +1,5 @@
 package com.library.demo.service.user;
 
-import com.library.demo.entity.businnes.Book;
 import com.library.demo.entity.user.Role;
 import com.library.demo.entity.user.User;
 import com.library.demo.exception.ResourceNotFoundException;
@@ -8,6 +7,7 @@ import com.library.demo.payload.mappers.UserMappers;
 import com.library.demo.payload.messages.ErrorMessages;
 import com.library.demo.payload.messages.SuccessMessages;
 import com.library.demo.payload.request.user.UserRequest;
+import com.library.demo.payload.request.user.UserSaveRequest;
 import com.library.demo.payload.response.businnes.ResponseMessage;
 import com.library.demo.payload.response.user.UserResponse;
 import com.library.demo.repository.user.RoleRepository;
@@ -25,6 +25,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -65,8 +66,8 @@ public class UserService {
     public ResponseMessage<UserResponse> getUserProfile(Authentication authentication) {
 
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
-        User user=userRepository.findByEmail(userDetails.getEmail()).
-                orElseThrow(()->new ResourceNotFoundException(ErrorMessages.NOT_FOUND_USER_MESSAGE_EMAIL));
+        User user = userRepository.findByEmail(userDetails.getEmail()).
+                orElseThrow(() -> new ResourceNotFoundException(ErrorMessages.NOT_FOUND_USER_MESSAGE_EMAIL));
         return ResponseMessage.<UserResponse>builder()
                 .message(SuccessMessages.USER_FOUND)
                 .returnBody(userMappers.mapUserToUserResponse(user))
@@ -87,5 +88,40 @@ public class UserService {
                 .httpStatus(HttpStatus.OK)
                 .build();
 
+    }
+
+    public ResponseMessage<UserResponse> saveUserWithRole(@Valid UserSaveRequest userSaveRequest,
+                                                          Authentication authentication) {
+        // Mevcut kullanıcıyı al (admin mi staff mı?)
+        User currentUser = methodHelper.loadByEmail(((UserDetailsImpl) authentication.getPrincipal()).getEmail());
+
+        // Girilen role id’leri ile roller alınıyor
+        Set<Role> rolesToAssign = userSaveRequest.getRoleIdList().stream()
+                .map(id -> roleRepository.findById(id)
+                        .orElseThrow(() -> new ResourceNotFoundException(String.format(ErrorMessages.ROLE_NOT_FOUND) + id)))
+                .collect(Collectors.toSet());
+
+        Set<String> roleNames = rolesToAssign.stream()
+                .map(Role::getName)
+                .collect(Collectors.toSet());
+
+        // Yetki kontrolü
+        methodHelper.checkStaffCannotAssignAdminOrStaffRoles(currentUser, roleNames);
+
+        // Benzersizlik kontrolü
+        userUniquePropertyValidator.checkDublication(userSaveRequest.getPhone(), userSaveRequest.getEmail());
+
+        // Kullanıcı nesnesi oluştur
+        User user = userMappers.mapUserRequestToUser(userSaveRequest);
+        user.setRoles(rolesToAssign);
+
+        // Kaydet
+        User savedUser = userRepository.save(user);
+
+        return ResponseMessage.<UserResponse>builder()
+                .message(SuccessMessages.USER_CREATE)
+                .returnBody(userMappers.mapUserToUserResponse(savedUser))
+                .httpStatus(HttpStatus.CREATED)
+                .build();
     }
 }

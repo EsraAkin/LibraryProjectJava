@@ -1,7 +1,7 @@
 package com.library.demo.controller.user;
 
 import com.library.demo.payload.request.user.UserRequest;
-import com.library.demo.payload.response.businnes.BookResponse;
+import com.library.demo.payload.request.user.UserSaveRequest;
 import com.library.demo.payload.response.businnes.ResponseMessage;
 import com.library.demo.payload.response.user.UserResponse;
 import com.library.demo.service.user.UserService;
@@ -13,7 +13,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -62,6 +61,14 @@ public class UserController {
     public ResponseMessage<UserResponse> getUserById(@PathVariable @Valid Long userId) {
         return userService.getUserById(userId);
 
+    }
+
+
+    @PostMapping("users")
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN', 'ROLE_STAFF')")
+    public ResponseMessage<UserResponse> userSaveWithRole(@RequestBody @Valid UserSaveRequest userSaveRequest,
+                                                          Authentication authentication) {
+        return userService.saveUserWithRole(userSaveRequest, authentication);
     }
 
 

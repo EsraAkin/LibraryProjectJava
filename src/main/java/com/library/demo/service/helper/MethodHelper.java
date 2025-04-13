@@ -9,6 +9,8 @@ import com.library.demo.repository.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.Set;
+
 @Component
 @RequiredArgsConstructor
 public class MethodHelper {
@@ -35,4 +37,19 @@ public class MethodHelper {
         return userRepository.findById(id)
                 .orElseThrow(()->new ResourceNotFoundException(String.format(ErrorMessages.NOT_FOUND_USER_MESSAGE, id)));
     }
+
+    public void checkStaffCannotAssignAdminOrStaffRoles(User currentUser, Set<String> requestedRoles) {
+        boolean isStaff = currentUser.getRoles().stream()
+                .anyMatch(role -> role.getName().equals("STAFF"));
+
+        if (isStaff && requestedRoles.stream().anyMatch(role ->
+                role.equals("ADMIN") || role.equals("STAFF"))) {
+            throw new IllegalArgumentException("STAFF users can only assign MEMBER roles.");
+        }
+    }
+
+
+
+
+
 }
