@@ -24,6 +24,7 @@ public class BookMappers {
                 .shelfCode(bookRequest.getShelfCode())
                 .active(bookRequest.isActive())
                 .featured(bookRequest.isFeatured())
+                .loanable(true) // Kullanıcıdan gelmediği için biz otomatik ayarlıyoruz
                 .build();
 
     }
@@ -47,5 +48,26 @@ public class BookMappers {
 
                 .build();
     }
+
+//TODO 2 tane response var. düzenleme gerek
+
+    public BookResponse mapToResponse(Book book) {
+        return BookResponse.builder()
+                .id(book.getId())
+                .name(book.getName())
+                .isbn(book.getIsbn())
+                .pageCount(book.getPageCount())
+                .publishDate(book.getPublishDate())
+                .image(book.getImage())
+                .shelfCode(book.getShelfCode())
+                .active(book.isActive())
+                .featured(book.isFeatured())
+                .author(book.getAuthor().getId())
+                .publisher(book.getPublisher().getId())
+                .category(book.getCategory().getId())
+                .createDate(book.getCreateDate().toString())
+                .build();
+    }
+
 
 }

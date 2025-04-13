@@ -1,6 +1,5 @@
 package com.library.demo.entity.businnes;
 
-import com.library.demo.entity.user.Loan;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

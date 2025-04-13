@@ -36,7 +36,6 @@ public class BookController {
 
     @PostMapping("/save")
     @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
-
     public ResponseMessage<BookResponse> saveBook(@RequestBody @Valid BookRequest bookRequest) {
         return bookService.saveBook(bookRequest);
     }

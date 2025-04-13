@@ -1,5 +1,6 @@
 package com.library.demo.entity.user;
 
+import com.library.demo.entity.businnes.Loan;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

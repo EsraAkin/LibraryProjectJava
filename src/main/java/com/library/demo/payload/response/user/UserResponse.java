@@ -1,6 +1,6 @@
 package com.library.demo.payload.response.user;
 
-import com.library.demo.entity.user.Loan;
+import com.library.demo.entity.businnes.Loan;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

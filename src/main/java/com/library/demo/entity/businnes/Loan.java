@@ -1,6 +1,6 @@
-package com.library.demo.entity.user;
+package com.library.demo.entity.businnes;
 
-import com.library.demo.entity.businnes.Book;
+import com.library.demo.entity.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -29,6 +29,7 @@ public class Loan {
 
     private String notes;
 
+    private boolean returned;
 
     @ManyToOne
     @JoinColumn(name="user_id")

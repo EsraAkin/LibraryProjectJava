@@ -74,6 +74,11 @@ public class MethodHelper {
 
     }
 
+    public Book getBook(Long id) {
+        return bookRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException(
+                        String.format(ErrorMessages.BOOK_NOT_FOUND, id)));
+    }
 
 
 

@@ -32,6 +32,11 @@ public class ErrorMessages {
   //book
   public static final String BOOK_NOT_FOUND = "There is no book like that, check the database";
   public static final String ALREADY_BOOK_FOUND = "A book with the same ISBN already exists in the system.";
+  public static final String BOOK_NOT_AVAILABLE_FOR_LOAN = "This book is not available for loan.";
+  public static final String USER_HAS_OVERDUE_BOOKS = "You have overdue books. You cannot borrow another book.";
+  public static final String USER_REACHED_LOAN_LIMIT = "You have reached your loan limit based on your score.";
+
+
   //author
   public static final String AUTHOR_NOT_FOUND = "There is no author like that, check the database";
 
