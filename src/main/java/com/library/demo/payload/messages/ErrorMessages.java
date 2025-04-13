@@ -13,6 +13,7 @@ public class ErrorMessages {
   public static final String NOT_PERMITTED_METHOD_MESSAGE = "You do not have any permission to do this operation";
   public static final String PASSWORD_SHOULD_NOT_MATCHED = "Your passwords are not matched" ;
   public static final String PASSWORD_SHOULD_NOT_MATCHED_HISTORY = "The new password cannot be the same as any of the last 3 passwords. Please choose a different password.";
+  public static final String USER_HAS_LOANS = "User cannot be deleted because there are existing loan records.";
 
 
   //unique properties

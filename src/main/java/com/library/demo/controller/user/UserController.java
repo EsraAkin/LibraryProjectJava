@@ -81,6 +81,13 @@ public class UserController {
     }
 
 
+    //TODO loan ekleyince kontrol et tekrar.
+    @DeleteMapping("/users/{user_id}")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    public ResponseMessage<UserResponse> deleteUser(@PathVariable Long user_id) {
+        return userService.deleteUserById(user_id);
+    }
+
 
 
 

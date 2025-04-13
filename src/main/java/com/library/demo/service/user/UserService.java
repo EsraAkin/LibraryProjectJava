@@ -2,6 +2,7 @@ package com.library.demo.service.user;
 
 import com.library.demo.entity.user.Role;
 import com.library.demo.entity.user.User;
+import com.library.demo.exception.ConflictException;
 import com.library.demo.exception.ResourceNotFoundException;
 import com.library.demo.payload.mappers.UserMappers;
 import com.library.demo.payload.messages.ErrorMessages;
@@ -157,4 +158,19 @@ public class UserService {
                 .build();
     }
 
+    public ResponseMessage<UserResponse> deleteUserById(Long user_id) {
+        User user = methodHelper.getUser(user_id);
+
+        if (user.getLoans() != null && !user.getLoans().isEmpty()) {
+            throw new ConflictException(ErrorMessages.USER_HAS_LOANS);
+        }
+
+        userRepository.delete(user);
+
+        return ResponseMessage.<UserResponse>builder()
+                .message(SuccessMessages.USER_DELETE)
+                .httpStatus(HttpStatus.OK)
+                .returnBody(userMappers.mapUserToUserResponse(user))
+                .build();
+    }
 }
