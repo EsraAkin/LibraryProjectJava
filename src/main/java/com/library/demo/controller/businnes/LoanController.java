@@ -48,6 +48,16 @@ public class LoanController {
         return ResponseEntity.ok(loanResponse);
     }
 
+    @GetMapping("/user/{userId}")
+    public Page<LoanResponse> getLoansByUserId(
+            @PathVariable Long userId,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "20") int size,
+            @RequestParam(defaultValue = "loanDate") String sort,
+            @RequestParam(defaultValue = "desc") String type
+    ) {
+        return loanService.getLoansByUserId(userId, page, size, sort, type);
+    }
 
 
 }

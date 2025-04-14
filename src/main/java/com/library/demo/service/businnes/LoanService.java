@@ -112,4 +112,20 @@ public class LoanService {
         return loanMappers.mapToLoanResponse(loan, isPrivileged);
     }
 
+    public Page<LoanResponse> getLoansByUserId(Long userId, int page, int size, String sort, String type) {
+
+        // Kullanıcının var olup olmadığını kontrol et
+        User user = methodHelper.getUser(userId);
+
+        // Sıralama yönünü belirle
+        Sort.Direction direction = type.equalsIgnoreCase("asc") ? Sort.Direction.ASC : Sort.Direction.DESC;
+        Pageable pageable = PageRequest.of(page, size, Sort.by(direction, sort));
+
+        // Loan'ları getir
+        Page<Loan> loans = loanRepository.findByUserId(userId, pageable);
+
+        // Mapper ile dönüştür
+        return loans.map(loan -> loanMappers.mapToLoanResponse(loan, true)); // Admin kontrolü gerekmez, true sabit verilir
+    }
+
 }
