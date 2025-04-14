@@ -141,4 +141,13 @@ public class LoanService {
         return loans.map(loan -> loanMappers.mapToLoanResponse(loan, true)); // `true` => user görünsün
 
     }
-}
+
+    public LoanResponse getLoanDetailsForAdmin(Long loanId) {
+        Loan loan = loanRepository.findById(loanId)
+                .orElseThrow(() -> new ResourceNotFoundException(ErrorMessages.LOAN_NOT_FOUND));
+
+        // Admin/Employee olduğu için detaylar tam dönüyor
+        return loanMappers.mapToLoanResponse(loan, true);
+    }
+    }
+

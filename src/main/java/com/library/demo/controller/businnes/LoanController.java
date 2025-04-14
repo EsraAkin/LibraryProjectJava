@@ -48,6 +48,7 @@ public class LoanController {
         return ResponseEntity.ok(loanResponse);
     }
 
+    @PreAuthorize("hasAnyAuthority('ROLE_EMPLOYEE', 'ROLE_ADMIN')")
     @GetMapping("/user/{userId}")
     public Page<LoanResponse> getLoansByUserId(
             @PathVariable Long userId,
@@ -69,6 +70,14 @@ public class LoanController {
             @RequestParam(defaultValue = "desc") String type
     ) {
         return loanService.getAllLoansOfBook(bookId, page, size, sort, type);
+    }
+
+
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN', 'ROLE_EMPLOYEE')")
+    @GetMapping("/auth/{loanId}")
+    public ResponseEntity<LoanResponse> getLoanDetailsForAdmin(@PathVariable Long loanId) {
+        LoanResponse response = loanService.getLoanDetailsForAdmin(loanId);
+        return ResponseEntity.ok(response);
     }
 
 
