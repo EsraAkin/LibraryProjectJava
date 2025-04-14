@@ -9,6 +9,8 @@ import com.library.demo.repository.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+
+import java.util.Arrays;
 import java.util.Set;
 
 @Component
@@ -78,6 +80,13 @@ public class MethodHelper {
         return bookRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(
                         String.format(ErrorMessages.BOOK_NOT_FOUND, id)));
+    }
+
+    public boolean hasAnyRole(User user, String... roles) {
+        return user.getRoles()
+                .stream()
+                .map(role -> role.getName()) // name: örn. "ADMIN"
+                .anyMatch(userRole -> Arrays.asList(roles).contains(userRole));
     }
 
 

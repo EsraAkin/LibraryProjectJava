@@ -1,6 +1,7 @@
 package com.library.demo.payload.response.businnes;
 
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.library.demo.entity.businnes.Book;
 import com.library.demo.entity.user.User;
 import jakarta.validation.constraints.Size;
@@ -15,6 +16,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class LoanResponse {
 
     private Long id;

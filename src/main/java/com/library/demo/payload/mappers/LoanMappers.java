@@ -38,6 +38,17 @@ public class LoanMappers {
                 .book(bookMappers.mapToResponse(loan.getBook()))
                 .build();
     }
+    public LoanResponse mapToLoanResponse(Loan loan, boolean includeNotes) {
+        return LoanResponse.builder()
+                .id(loan.getId())
+                .userId(loan.getUser().getId())
+                .bookId(loan.getBook().getId())
+                .loanDate(loan.getLoanDate().toLocalDate())
+                .expireDate(loan.getExpireDate().toLocalDate())
+                .book(bookMappers.mapBookToBookResponse(loan.getBook()))
+                .notes(includeNotes ? loan.getNotes() : null)
+                .build();
+    }
 
 
 }

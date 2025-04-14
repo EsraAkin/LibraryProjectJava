@@ -6,7 +6,10 @@ import com.library.demo.payload.response.businnes.ResponseMessage;
 import com.library.demo.service.businnes.LoanService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -22,6 +25,20 @@ public class LoanController {
         return loanService.saveLoans(loanRequest);
 
     }
+
+    @GetMapping("/loans")
+    @PreAuthorize("hasAnyAuthority('ROLE_MEMBER', 'ROLE_EMPLOYEE', 'ROLE_ADMIN')")
+    public ResponseEntity<Page<LoanResponse>> getAllLoansOfAuthenticatedUser(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "20") int size,
+            @RequestParam(defaultValue = "loanDate") String sort,
+            @RequestParam(defaultValue = "desc") String type,
+            Authentication authentication
+    ) {
+        Page<LoanResponse> responses = loanService.getAllLoansOfAuthenticatedUser(page, size, sort, type, authentication);
+        return ResponseEntity.ok(responses);
+    }
+
 
 
 
