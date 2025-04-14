@@ -128,4 +128,17 @@ public class LoanService {
         return loans.map(loan -> loanMappers.mapToLoanResponse(loan, true)); // Admin kontrolü gerekmez, true sabit verilir
     }
 
+    public Page<LoanResponse> getAllLoansOfBook(Long bookId, int page, int size, String sort, String type) {
+
+        // Sıralama tipi belirleniyor
+        Sort.Direction direction = type.equalsIgnoreCase("asc") ? Sort.Direction.ASC : Sort.Direction.DESC;
+        Pageable pageable = PageRequest.of(page, size, Sort.by(direction, sort));
+
+        // Kitabın ödünç kayıtları alınıyor
+        Page<Loan> loans = loanRepository.findByBookId(bookId, pageable);
+
+        // Her loan için LoanResponse'a mapleniyor (user bilgisi ile birlikte)
+        return loans.map(loan -> loanMappers.mapToLoanResponse(loan, true)); // `true` => user görünsün
+
+    }
 }
