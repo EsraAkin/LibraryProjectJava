@@ -20,5 +20,7 @@ public class SuccessMessages {
   public static final String BOOK_FOUND = "Book is Found Successfully";
   public static final String BOOK_UPDATE = "Book information has been updated successfully";
 
+  //Loan
+  public static final String LOAN_CREATE = "Loan has been created successfully";
 
 }

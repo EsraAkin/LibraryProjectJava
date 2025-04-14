@@ -4,6 +4,7 @@ import com.library.demo.entity.businnes.Book;
 import com.library.demo.entity.businnes.Loan;
 import com.library.demo.entity.user.User;
 import com.library.demo.payload.mappers.LoanMappers;
+import com.library.demo.payload.messages.SuccessMessages;
 import com.library.demo.payload.request.businnes.LoanRequest;
 import com.library.demo.payload.response.businnes.LoanResponse;
 import com.library.demo.payload.response.businnes.ResponseMessage;
@@ -45,14 +46,9 @@ public class LoanService {
         LocalDateTime expireDate = loanHelper.calculateExpireDate(user);
 
         // 4. Loan nesnesini oluştur
-        Loan loan = Loan.builder()
-                .user(user)
-                .book(book)
-                .notes(loanRequest.getNotes())
-                .loanDate(loanDate)
-                .expireDate(expireDate)
-                .returned(false)
-                .build();
+        Loan loan = loanMappers.mapLoanRequestToLoan(
+                loanRequest, user, book, loanDate, expireDate);
+
 
         // 5. Kaydet
         Loan savedLoan = loanRepository.save(loan);
@@ -63,7 +59,7 @@ public class LoanService {
 
         // 7. Response dön
         return ResponseMessage.<LoanResponse>builder()
-                .message("Loan has been created successfully.")
+                .message(SuccessMessages.LOAN_CREATE)
                 .httpStatus(HttpStatus.CREATED)
                 .returnBody(loanMappers.mapToLoanResponse(savedLoan))
                 .build();
