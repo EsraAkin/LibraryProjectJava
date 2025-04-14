@@ -47,5 +47,7 @@ public class ErrorMessages {
   public static final String PUBLISHER_NOT_FOUND = "There is no publisher like that, check the database";
 
 
+  //loan
+  public static final String LOAN_NOT_FOUND = "There is no loan like that, check the database";
 
 }

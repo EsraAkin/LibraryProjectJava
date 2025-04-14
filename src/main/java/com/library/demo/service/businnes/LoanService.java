@@ -3,7 +3,9 @@ package com.library.demo.service.businnes;
 import com.library.demo.entity.businnes.Book;
 import com.library.demo.entity.businnes.Loan;
 import com.library.demo.entity.user.User;
+import com.library.demo.exception.ResourceNotFoundException;
 import com.library.demo.payload.mappers.LoanMappers;
+import com.library.demo.payload.messages.ErrorMessages;
 import com.library.demo.payload.messages.SuccessMessages;
 import com.library.demo.payload.request.businnes.LoanRequest;
 import com.library.demo.payload.response.businnes.LoanResponse;
@@ -20,6 +22,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
@@ -84,4 +87,29 @@ public class LoanService {
         return loans.map(loan -> loanMappers.mapToLoanResponse(loan, isPrivileged));
 
     }
+
+    public LoanResponse getLoanOfAuthenticatedUser(Long loanId, Authentication authentication) {
+
+        // 1. Loan var mı kontrolü
+        Loan loan = loanRepository.findById(loanId)
+                .orElseThrow(() -> new ResourceNotFoundException(ErrorMessages.LOAN_NOT_FOUND));
+
+        // 2. Giriş yapan kullanıcıyı getir
+        User currentUser = methodHelper.loadByEmail(
+                ((UserDetailsImpl) authentication.getPrincipal()).getEmail()
+        );
+
+        // 3. Sahiplik veya rol kontrolü (ya kendisi olmalı ya da admin/employee)
+        if (!loan.getUser().getId().equals(currentUser.getId()) &&
+                !methodHelper.hasAnyRole(currentUser, "ADMIN", "EMPLOYEE")) {
+            throw new SecurityException(ErrorMessages.NOT_PERMITTED_METHOD_MESSAGE);
+        }
+
+        // 4. Notes alanı gösterilmeli mi?
+        boolean isPrivileged = methodHelper.hasAnyRole(currentUser, "ADMIN", "EMPLOYEE");
+
+        // 5. Response dön
+        return loanMappers.mapToLoanResponse(loan, isPrivileged);
+    }
+
 }

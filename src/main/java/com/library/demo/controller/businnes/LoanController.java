@@ -39,6 +39,14 @@ public class LoanController {
         return ResponseEntity.ok(responses);
     }
 
+    @GetMapping("/loans/{id}")
+    public ResponseEntity<LoanResponse> getLoanById(
+            @PathVariable Long id,
+            Authentication authentication) {
+
+        LoanResponse loanResponse = loanService.getLoanOfAuthenticatedUser(id, authentication);
+        return ResponseEntity.ok(loanResponse);
+    }
 
 
 
