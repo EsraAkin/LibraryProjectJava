@@ -49,5 +49,7 @@ public class ErrorMessages {
 
   //loan
   public static final String LOAN_NOT_FOUND = "There is no loan like that, check the database";
+  public static final String LOAN_ALREADY_RETURNED = "This loan was already returned before.";
+
 
 }

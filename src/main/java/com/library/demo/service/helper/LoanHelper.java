@@ -4,11 +4,16 @@ import com.library.demo.entity.businnes.Book;
 import com.library.demo.entity.businnes.Loan;
 import com.library.demo.entity.user.User;
 import com.library.demo.exception.ConflictException;
+import com.library.demo.exception.ResourceNotFoundException;
 import com.library.demo.payload.messages.ErrorMessages;
+import com.library.demo.payload.request.businnes.LoanRequest;
 import com.library.demo.repository.businnes.LoanRepository;
+import com.library.demo.security.service.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -16,6 +21,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class LoanHelper {
     private final LoanRepository loanRepository;
+    private final MethodHelper methodHelper;
+
 
     public void checkIfBookIsLoanable(Book book) {
         if (!book.isLoanable()) {
@@ -58,6 +65,91 @@ public class LoanHelper {
         if (score < 100) return 14;
         return 21;
     }
+
+
+    public void handleBookReturnAndScoreUpdate(Loan loan) {
+
+        // Eğer kitap zaten iade edilmişse hata fırlatılır
+        if (loan.isReturned()) {
+            throw new ConflictException(ErrorMessages.LOAN_ALREADY_RETURNED);
+        }
+
+        // Kitap iade ediliyor
+        loan.setReturnDate(LocalDateTime.now());
+        loan.setReturned(true);
+
+        // Skor güncelleniyor
+        boolean onTime = loan.getReturnDate().isBefore(loan.getExpireDate());
+        int currentScore = loan.getUser().getScore();
+        loan.getUser().setScore(onTime ? currentScore + 1 : currentScore - 1);
+
+        // Kitap tekrar ödünç alınabilir hale geliyor
+        loan.getBook().setLoanable(true);
+    }
+
+
+
+
+    // LoanUpdateService.java - Kitap iade edilince skorun güncellenmesi
+    public void returnLoan(Long loanId, Authentication authentication) {
+        Loan loan = loanRepository.findById(loanId)
+                .orElseThrow(() -> new ResourceNotFoundException(ErrorMessages.LOAN_NOT_FOUND));
+
+        User currentUser = methodHelper.loadByEmail(
+                ((UserDetailsImpl) authentication.getPrincipal()).getEmail()
+        );
+
+        methodHelper.validateUserUpdatePermission(currentUser, loan.getUser());
+
+        if (loan.isReturned()) {
+            throw new ConflictException(ErrorMessages.LOAN_ALREADY_RETURNED);
+        }
+
+        // Kitap iade ediliyor
+        loan.setReturnDate(LocalDate.now().atStartOfDay());
+        loan.setReturned(true);
+
+        // Skor güncelleme
+        boolean onTime = loan.getReturnDate().isBefore(loan.getExpireDate());
+        int currentScore = loan.getUser().getScore();
+        loan.getUser().setScore(onTime ? currentScore + 1 : currentScore - 1);
+
+        // Kitap tekrar ödünç alınabilir hale gelir
+        loan.getBook().setLoanable(true);
+
+        loanRepository.save(loan);
+    }
+
+
+    // LoanCreateService.java - Kitap ödünç alma sırasında LoanHelper kullanımı
+    public Loan createLoan(LoanRequest request) {
+        User user = methodHelper.getUser(request.getUserId());
+        Book book = methodHelper.getBook(request.getBookId());
+
+        checkIfBookIsLoanable(book);
+        checkIfUserHasOverdueLoans(user);
+        checkUserLoanLimit(user);
+
+        LocalDateTime loanDate = LocalDateTime.now();
+        LocalDateTime expireDate = calculateExpireDate(user);
+
+        Loan loan = Loan.builder()
+                .book(book)
+                .user(user)
+                .loanDate(loanDate)
+                .expireDate(expireDate)
+                .notes(request.getNotes())
+                .returned(false)
+                .build();
+
+        book.setLoanable(false);
+
+        return loanRepository.save(loan);
+    }
+
+
+
+
 
 
 }

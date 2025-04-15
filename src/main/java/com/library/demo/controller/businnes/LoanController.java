@@ -19,15 +19,9 @@ public class LoanController {
 
     private final LoanService loanService;
 
-    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN', 'ROLE_STAFF')")
-    @PostMapping("/loans")
-    public ResponseMessage<LoanResponse> saveLoans(@RequestBody @Valid LoanRequest loanRequest){
-        return loanService.saveLoans(loanRequest);
-
-    }
 
     @GetMapping("/loans")
-    @PreAuthorize("hasAnyAuthority('ROLE_MEMBER', 'ROLE_EMPLOYEE', 'ROLE_ADMIN')")
+    @PreAuthorize("hasAnyAuthority('ROLE_MEMBER', 'ROLE_STAFF', 'ROLE_ADMIN')")
     public ResponseEntity<Page<LoanResponse>> getAllLoansOfAuthenticatedUser(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "20") int size,
@@ -48,7 +42,7 @@ public class LoanController {
         return ResponseEntity.ok(loanResponse);
     }
 
-    @PreAuthorize("hasAnyAuthority('ROLE_EMPLOYEE', 'ROLE_ADMIN')")
+    @PreAuthorize("hasAnyAuthority('ROLE_STAFF', 'ROLE_ADMIN')")
     @GetMapping("/user/{userId}")
     public Page<LoanResponse> getLoansByUserId(
             @PathVariable Long userId,
@@ -60,7 +54,7 @@ public class LoanController {
         return loanService.getLoansByUserId(userId, page, size, sort, type);
     }
 
-    @PreAuthorize("hasAnyAuthority('ROLE_EMPLOYEE', 'ROLE_ADMIN')")
+    @PreAuthorize("hasAnyAuthority('ROLE_STAFF', 'ROLE_ADMIN')")
     @GetMapping("/book/{bookId}")
     public Page<LoanResponse> getAllLoansOfBook(
             @PathVariable Long bookId,
@@ -73,14 +67,22 @@ public class LoanController {
     }
 
 
-    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN', 'ROLE_EMPLOYEE')")
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN', 'ROLE_STAFF')")
     @GetMapping("/auth/{loanId}")
     public ResponseEntity<LoanResponse> getLoanDetailsForAdmin(@PathVariable Long loanId) {
         LoanResponse response = loanService.getLoanDetailsForAdmin(loanId);
         return ResponseEntity.ok(response);
     }
 
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN', 'ROLE_STAFF')")
+    @PostMapping("/loans")
+    public ResponseEntity<LoanResponse> createLoan(
+            @Valid @RequestBody LoanRequest loanRequest,
+            Authentication authentication) {
 
+        LoanResponse response = loanService.createLoan(loanRequest, authentication);
+        return ResponseEntity.ok(response);
+    }
 
 
 }
