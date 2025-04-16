@@ -35,6 +35,8 @@ public class ErrorMessages {
   public static final String BOOK_NOT_AVAILABLE_FOR_LOAN = "This book is not available for loan.";
   public static final String USER_HAS_OVERDUE_BOOKS = "You have overdue books. You cannot borrow another book.";
   public static final String USER_REACHED_LOAN_LIMIT = "You have reached your loan limit based on your score.";
+  public static final String BOOK_CAN_NOT_DELETED = "This book is currently on loan and cannot be deleted.";
+
 
 
   //author

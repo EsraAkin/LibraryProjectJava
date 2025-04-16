@@ -2,6 +2,7 @@ package com.library.demo.service.helper;
 
 import com.library.demo.entity.businnes.Book;
 import com.library.demo.entity.user.User;
+import com.library.demo.exception.ConflictException;
 import com.library.demo.exception.ResourceNotFoundException;
 import com.library.demo.payload.messages.ErrorMessages;
 import com.library.demo.repository.businnes.BookRepository;
@@ -24,7 +25,7 @@ public class MethodHelper {
                 .anyMatch(loan -> loan.getReturnDate() == null);
 
         if (onLoan) {
-            throw new IllegalStateException("This book is currently on loan and cannot be deleted.");
+            throw new ConflictException(ErrorMessages.BOOK_CAN_NOT_DELETED);
         }
     }
 
