@@ -1,6 +1,7 @@
 package com.library.demo.controller.businnes;
 
 import com.library.demo.payload.request.businnes.LoanRequest;
+import com.library.demo.payload.request.businnes.LoanUpdateRequest;
 import com.library.demo.payload.response.businnes.LoanResponse;
 import com.library.demo.payload.response.businnes.ResponseMessage;
 import com.library.demo.service.businnes.LoanService;
@@ -83,6 +84,20 @@ public class LoanController {
         LoanResponse response = loanService.createLoan(loanRequest, authentication);
         return ResponseEntity.ok(response);
     }
+
+
+
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN', 'ROLE_STAFF')")
+    @PutMapping("/loans/{id}")
+    public ResponseEntity<LoanResponse> updateLoan(
+            @PathVariable Long id,
+            @RequestBody @Valid LoanUpdateRequest loanUpdateRequest,
+            Authentication authentication) {
+        LoanResponse response = loanService.updateLoan(id, loanUpdateRequest, authentication);
+        return ResponseEntity.ok(response);
+    }
+
+
 
 
 }

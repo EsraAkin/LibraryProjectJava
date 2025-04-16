@@ -3,16 +3,19 @@ package com.library.demo.service.businnes;
 import com.library.demo.entity.businnes.Book;
 import com.library.demo.entity.businnes.Loan;
 import com.library.demo.entity.user.User;
+import com.library.demo.exception.ConflictException;
 import com.library.demo.exception.ResourceNotFoundException;
 import com.library.demo.payload.mappers.LoanMappers;
 import com.library.demo.payload.messages.ErrorMessages;
 import com.library.demo.payload.request.businnes.LoanRequest;
+import com.library.demo.payload.request.businnes.LoanUpdateRequest;
 import com.library.demo.payload.response.businnes.LoanResponse;
 import com.library.demo.repository.businnes.BookRepository;
 import com.library.demo.repository.businnes.LoanRepository;
 import com.library.demo.security.service.UserDetailsImpl;
 import com.library.demo.service.helper.LoanHelper;
 import com.library.demo.service.helper.MethodHelper;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -46,7 +49,7 @@ public class LoanService {
 
         boolean isPrivileged = methodHelper.hasAnyRole(user, "ADMIN", "EMPLOYEE");
 
-        return loans.map(loan -> loanMappers.mapToLoanResponse(loan, isPrivileged));
+        return loans.map(loan -> loanMappers.mapLoanToLoanResponse(loan, isPrivileged));
 
     }
 
@@ -71,7 +74,7 @@ public class LoanService {
         boolean isPrivileged = methodHelper.hasAnyRole(currentUser, "ADMIN", "EMPLOYEE");
 
         // 5. Response dön
-        return loanMappers.mapToLoanResponse(loan, isPrivileged);
+        return loanMappers.mapLoanToLoanResponse(loan, isPrivileged);
     }
 
     public Page<LoanResponse> getLoansByUserId(Long userId, int page, int size, String sort, String type) {
@@ -87,7 +90,7 @@ public class LoanService {
         Page<Loan> loans = loanRepository.findByUserId(userId, pageable);
 
         // Mapper ile dönüştür
-        return loans.map(loan -> loanMappers.mapToLoanResponse(loan, true)); // Admin kontrolü gerekmez, true sabit verilir
+        return loans.map(loan -> loanMappers.mapLoanToLoanResponse(loan, true)); // Admin kontrolü gerekmez, true sabit verilir
     }
 
     public Page<LoanResponse> getAllLoansOfBook(Long bookId, int page, int size, String sort, String type) {
@@ -100,7 +103,7 @@ public class LoanService {
         Page<Loan> loans = loanRepository.findByBookId(bookId, pageable);
 
         // Her loan için LoanResponse'a mapleniyor (user bilgisi ile birlikte)
-        return loans.map(loan -> loanMappers.mapToLoanResponse(loan, true)); // `true` => user görünsün
+        return loans.map(loan -> loanMappers.mapLoanToLoanResponse(loan, true)); // `true` => user görünsün
 
     }
 
@@ -109,7 +112,7 @@ public class LoanService {
                 .orElseThrow(() -> new ResourceNotFoundException(ErrorMessages.LOAN_NOT_FOUND));
 
         // Admin/Employee olduğu için detaylar tam dönüyor
-        return loanMappers.mapToLoanResponse(loan, true);
+        return loanMappers.mapLoanToLoanResponse(loan, true);
     }
 
     public LoanResponse createLoan(LoanRequest request, Authentication authentication) {
@@ -150,8 +153,53 @@ public class LoanService {
         boolean isPrivileged = methodHelper.hasAnyRole(currentUser, "ADMIN", "STAFF");
 
         // 11. Response dön
-        return loanMappers.mapToLoanResponse(savedLoan, isPrivileged);
+        return loanMappers.mapLoanToLoanResponse(savedLoan, isPrivileged);
     }
+
+    public LoanResponse updateLoan(Long id, @Valid LoanUpdateRequest loanUpdateRequest, Authentication authentication) {
+
+        // 1. Loan nesnesini getir
+        Loan loan = loanHelper.getLoanById(id);
+
+        // 2. returnDate null değilse kitap iade ediliyor demektir
+        if (loanUpdateRequest.getReturnDate() != null) {
+
+            // Aynı kitap daha önce iade edilmişse işlem yapılamaz
+            if (loan.isReturned()) {
+                throw new ConflictException(ErrorMessages.LOAN_ALREADY_RETURNED);
+            }
+
+            // Kitap iade ediliyor
+            loan.setReturnDate(loanUpdateRequest.getReturnDate().atStartOfDay());
+
+            loan.setReturned(true);
+            loan.getBook().setLoanable(true);
+
+            // Skor güncelleme
+            boolean onTime = !loan.getExpireDate()
+                    .toLocalDate()
+                    .isBefore(loan.getReturnDate().toLocalDate());
+
+            int currentScore = loan.getUser().getScore();
+            loan.getUser().setScore(onTime ? currentScore + 1 : currentScore - 1);
+
+        } else {
+            // Sadece expireDate ve notes güncelleniyor
+            loan.setExpireDate(loanUpdateRequest.getExpireDate().atStartOfDay());
+
+        }
+
+        // Notlar her iki durumda da güncellenebilir
+        loan.setNotes(loanUpdateRequest.getNotes());
+
+        // Veritabanına kaydet
+        loanRepository.save(loan);
+
+        // DTO'ya çevirip dön
+        return loanMappers.mapLoanToLoanResponse(loan);
+
+    }
+
 
 }
 

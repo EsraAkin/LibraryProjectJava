@@ -27,7 +27,7 @@ public class LoanMappers {
     }
 
 
-    public LoanResponse mapToLoanResponse(Loan loan) {
+    public LoanResponse mapLoanToLoanResponse(Loan loan) {
         return LoanResponse.builder()
                 .id(loan.getId())
                 .userId(loan.getUser().getId())
@@ -38,7 +38,7 @@ public class LoanMappers {
                 .book(bookMappers.mapToResponse(loan.getBook()))
                 .build();
     }
-    public LoanResponse mapToLoanResponse(Loan loan, boolean includeNotes) {
+    public LoanResponse mapLoanToLoanResponse(Loan loan, boolean includeNotes) {
         return LoanResponse.builder()
                 .id(loan.getId())
                 .userId(loan.getUser().getId())

@@ -88,8 +88,6 @@ public class LoanHelper {
     }
 
 
-
-
     // LoanUpdateService.java - Kitap iade edilince skorun güncellenmesi
     public void returnLoan(Long loanId, Authentication authentication) {
         Loan loan = loanRepository.findById(loanId)
@@ -147,6 +145,10 @@ public class LoanHelper {
         return loanRepository.save(loan);
     }
 
+    public Loan getLoanById(Long id) {
+        return loanRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException(ErrorMessages.LOAN_NOT_FOUND));
+    }
 
 
 
