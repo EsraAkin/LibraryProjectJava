@@ -35,10 +35,28 @@ public class PublisherController {
         return ResponseEntity.ok(response);
     }
 
+    //TODO Anonymus olanlar için tekrar loginsiz test et. Whitelist kontrolü de yap.
     @GetMapping("publishers/{publisherId}")
-    public ResponseMessage<PublisherResponse> getPublisherById(@PathVariable Long publisherId){
+    public ResponseMessage<PublisherResponse> getPublisherById(@PathVariable Long publisherId) {
         return publisherService.getPublisherByIdRes(publisherId);
 
     }
+
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
+    @PutMapping("publishers/{publisherId}")
+    public ResponseMessage<PublisherResponse> updatePublisher(@RequestBody @Valid PublisherRequest publisherRequest,
+                                                              @PathVariable Long publisherId) {
+        return publisherService.updatePublisher(publisherRequest, publisherId);
+
+    }
+
+
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
+    @DeleteMapping("publishers/{publisherId}")
+    public ResponseMessage<PublisherResponse> deletePublisher(@PathVariable Long publisherId) {
+        return publisherService.deletePublisher(publisherId);
+
+    }
+
 
 }
