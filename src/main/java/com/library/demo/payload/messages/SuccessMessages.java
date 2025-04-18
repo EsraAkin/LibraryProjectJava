@@ -25,5 +25,6 @@ public class SuccessMessages {
 
   //Publisher
   public static final String PUBLISHER_CREATE = "Publisher has been created successfully";
+  public static final String PUBLISHER_FOUND = "Publisher is Found Successfully";
 
 }
