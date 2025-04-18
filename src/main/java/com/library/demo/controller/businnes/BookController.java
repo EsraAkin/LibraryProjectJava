@@ -75,7 +75,6 @@ public class BookController {
     }
 
 
-    //TODO ödünç verilmiş kitap için de test et.
     @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
     @DeleteMapping("/{book_Id}")
     public ResponseMessage<BookResponse> deleteBook(@PathVariable Long book_Id) {

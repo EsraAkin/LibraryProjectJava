@@ -23,4 +23,7 @@ public class SuccessMessages {
   //Loan
   public static final String LOAN_CREATE = "Loan has been created successfully";
 
+  //Publisher
+  public static final String PUBLISHER_CREATE = "Publisher has been created successfully";
+
 }

@@ -21,7 +21,10 @@ public class Publisher {
 
     private String name;
 
-    private Boolean builtIn;
+    @Column(nullable = false)
+    @Builder.Default
+    private Boolean builtIn = false;
+
 
     @OneToMany(mappedBy = "publisher")
     private List<Book> books;
