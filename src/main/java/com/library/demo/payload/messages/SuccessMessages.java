@@ -2,8 +2,6 @@ package com.library.demo.payload.messages;
 
 public class SuccessMessages {
 
-
-
   private SuccessMessages() {
   }
 
@@ -30,5 +28,11 @@ public class SuccessMessages {
   public static final String PUBLISHER_FOUND = "Publisher is Found Successfully";
   public static final String PUBLISHER_UPDATE = "Publisher is has been updated successfully";
   public static final String PUBLISHER_DELETE ="Publisher is Deleted Successfully" ;
+
+  //Author
+  public static final String AUTHOR_CREATE = "Author has been created successfully";
+  public static final String AUTHOR_FOUND = "Author is Found Successfully";
+  public static final String AUTHOR_UPDATE = "Author is has been updated successfully";
+  public static final String AUTHOR_DELETE ="Author is Deleted Successfully" ;
 
 }

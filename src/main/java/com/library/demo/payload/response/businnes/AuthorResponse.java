@@ -5,12 +5,10 @@ import lombok.Data;
 
 @Data
 @Builder
-public class PublisherResponse {
-
+public class AuthorResponse {
     private Long id;
 
     private String name;
 
     private Boolean builtIn;
-
 }

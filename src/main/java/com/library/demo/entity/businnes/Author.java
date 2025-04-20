@@ -1,10 +1,11 @@
 package com.library.demo.entity.businnes;
 
+
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import jakarta.persistence.*;
 
 import java.util.List;
 
@@ -21,6 +22,8 @@ public class Author {
 
     private String name;
 
+    @Column(nullable = false)
+   // @Builder.Default
     private Boolean builtIn;
 
     @OneToMany(mappedBy = "author")
