@@ -10,7 +10,7 @@ import lombok.Data;
 public class AuthorRequest {
 
     @NotNull(message = "Author Name is required")
-    @Size(message = "Author Name should be minimum:4 max:70 characters")
+    @Size(min = 4, max = 70, message = "Author Name should be minimum:4 max:70 characters")
     private String name;
 
     private Boolean builtIn;
