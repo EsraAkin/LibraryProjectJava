@@ -2,15 +2,15 @@ package com.library.demo.controller.businnes;
 
 import com.library.demo.payload.request.businnes.AuthorRequest;
 import com.library.demo.payload.response.businnes.AuthorResponse;
+import com.library.demo.payload.response.businnes.PublisherResponse;
 import com.library.demo.payload.response.businnes.ResponseMessage;
 import com.library.demo.service.businnes.AuthorService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -21,8 +21,21 @@ public class AuthorController {
 
     @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
     @PostMapping("/authors")
-    public ResponseMessage<AuthorResponse> saveAuthor(@RequestBody @Valid AuthorRequest authorRequest){
+    public ResponseMessage<AuthorResponse> saveAuthor(@RequestBody @Valid AuthorRequest authorRequest) {
         return authorService.saveAuthor(authorRequest);
+
+    }
+
+    @GetMapping("/authors")
+    public ResponseEntity<Page<AuthorResponse>> pageableAuthor(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "20") int size,
+            @RequestParam(defaultValue = "name") String sort,
+            @RequestParam(defaultValue = "asc") String type) {
+
+        Page<AuthorResponse> response= authorService.getAllAuthorPageable(page,size,sort,type);
+        return ResponseEntity.ok(response);
+
 
     }
 
