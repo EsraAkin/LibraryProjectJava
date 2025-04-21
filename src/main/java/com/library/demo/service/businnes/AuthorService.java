@@ -51,4 +51,13 @@ public class AuthorService {
 
 
     }
+
+    public ResponseMessage<AuthorResponse> getAuthorByIdRes(Long authorId) {
+        return ResponseMessage.<AuthorResponse>builder()
+                .message(SuccessMessages.AUTHOR_FOUND)
+                .returnBody(authorMappers.mapAuthorToAuthorResponse(getAuthorById(authorId)))
+                .httpStatus(HttpStatus.OK)
+                .build();
+
+    }
 }

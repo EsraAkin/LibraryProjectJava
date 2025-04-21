@@ -36,7 +36,13 @@ public class AuthorController {
         Page<AuthorResponse> response= authorService.getAllAuthorPageable(page,size,sort,type);
         return ResponseEntity.ok(response);
 
-
     }
+
+    @GetMapping("/authors/{authorId}")
+    public ResponseMessage<AuthorResponse> getByIdAuthor(@PathVariable Long authorId){
+        return authorService.getAuthorByIdRes(authorId);
+    }
+
+
 
 }
