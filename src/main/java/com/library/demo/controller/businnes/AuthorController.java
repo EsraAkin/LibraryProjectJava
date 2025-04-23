@@ -34,13 +34,13 @@ public class AuthorController {
             @RequestParam(defaultValue = "name") String sort,
             @RequestParam(defaultValue = "asc") String type) {
 
-        Page<AuthorResponse> response= authorService.getAllAuthorPageable(page,size,sort,type);
+        Page<AuthorResponse> response = authorService.getAllAuthorPageable(page, size, sort, type);
         return ResponseEntity.ok(response);
 
     }
 
     @GetMapping("/authors/{authorId}")
-    public ResponseMessage<AuthorResponse> getByIdAuthor(@PathVariable Long authorId){
+    public ResponseMessage<AuthorResponse> getByIdAuthor(@PathVariable Long authorId) {
         return authorService.getAuthorByIdRes(authorId);
     }
 
@@ -50,8 +50,11 @@ public class AuthorController {
                                                         @PathVariable Long authorId) {
         return authorService.updateAuthor(authorRequest, authorId);
 
-
     }
 
-
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
+    @DeleteMapping("/authors/{authorId}")
+    public ResponseMessage<AuthorResponse> deleteAuthor(@PathVariable Long authorId){
+        return authorService.deleteAuthor(authorId);
+    }
 }

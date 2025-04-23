@@ -28,27 +28,27 @@ public class AuthorService {
     private final AuthorRepository authorRepository;
     private final AuthorMappers authorMappers;
 
-    public Author getAuthorById(Long id){
-       return authorRepository.findById(id)
-                .orElseThrow(()->new ResourceNotFoundException(ErrorMessages.AUTHOR_NOT_FOUND));
+    public Author getAuthorById(Long id) {
+        return authorRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException(ErrorMessages.AUTHOR_NOT_FOUND));
 
     }
 
 
     public ResponseMessage<AuthorResponse> saveAuthor(@Valid AuthorRequest authorRequest) {
-       Author author= authorRepository.save(authorMappers.mapAuthorRequestToAuthor(authorRequest));
-       return ResponseMessage.<AuthorResponse>builder()
-               .message(SuccessMessages.AUTHOR_CREATE)
-               .returnBody(authorMappers.mapAuthorToAuthorResponse(author))
-               .httpStatus(HttpStatus.CREATED)
-               .build();
+        Author author = authorRepository.save(authorMappers.mapAuthorRequestToAuthor(authorRequest));
+        return ResponseMessage.<AuthorResponse>builder()
+                .message(SuccessMessages.AUTHOR_CREATE)
+                .returnBody(authorMappers.mapAuthorToAuthorResponse(author))
+                .httpStatus(HttpStatus.CREATED)
+                .build();
     }
 
     public Page<AuthorResponse> getAllAuthorPageable(int page, int size, String sort, String type) {
-            Sort.Direction direction = type.equalsIgnoreCase("desc") ? Sort.Direction.DESC : Sort.Direction.ASC;
-            Pageable pageable = PageRequest.of(page, size, Sort.by(direction, sort));
-            Page<Author> authors = authorRepository.findAll(pageable);
-            return authors.map(authorMappers::mapAuthorToAuthorResponse);
+        Sort.Direction direction = type.equalsIgnoreCase("desc") ? Sort.Direction.DESC : Sort.Direction.ASC;
+        Pageable pageable = PageRequest.of(page, size, Sort.by(direction, sort));
+        Page<Author> authors = authorRepository.findAll(pageable);
+        return authors.map(authorMappers::mapAuthorToAuthorResponse);
 
 
     }
@@ -63,12 +63,12 @@ public class AuthorService {
     }
 
     public ResponseMessage<AuthorResponse> updateAuthor(@Valid AuthorRequest authorRequest, Long authorId) {
-        Author existingAuthor=getAuthorById(authorId);
+        Author existingAuthor = getAuthorById(authorId);
         if (Boolean.TRUE.equals(existingAuthor.getBuiltIn())) {
             throw new ConflictException(ErrorMessages.NOT_PERMITTED_METHOD_MESSAGE);
         }
         existingAuthor.setName(authorRequest.getName());
-        Author updatedAuthor=authorRepository.save(existingAuthor);
+        Author updatedAuthor = authorRepository.save(existingAuthor);
         return ResponseMessage.<AuthorResponse>builder()
                 .message(SuccessMessages.AUTHOR_UPDATE)
                 .httpStatus(HttpStatus.OK)
@@ -77,5 +77,17 @@ public class AuthorService {
     }
 
 
+    public ResponseMessage<AuthorResponse> deleteAuthor(Long authorId) {
+
+        Author existingAuthor = getAuthorById(authorId);
+        authorRepository.deleteById(authorId);
+
+        return ResponseMessage.<AuthorResponse>builder()
+                .message(SuccessMessages.AUTHOR_DELETE)
+                .returnBody(authorMappers.mapAuthorToAuthorResponse(existingAuthor))
+                .httpStatus(HttpStatus.OK)
+                .build();
+
     }
+}
 
