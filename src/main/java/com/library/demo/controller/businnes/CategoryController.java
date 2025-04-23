@@ -6,6 +6,9 @@ import com.library.demo.payload.response.businnes.ResponseMessage;
 import com.library.demo.service.businnes.CategoryService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,6 +23,17 @@ public class CategoryController {
     @PostMapping("/categories")
     public ResponseMessage<CategoryResponse> saveCategory(@RequestBody @Valid CategoryRequest categoryRequest) {
         return categoryService.saveCategory(categoryRequest);
+    }
+
+    @GetMapping("/categories")
+    public ResponseEntity<Page<CategoryResponse>> pageableCategory(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "20") int size,
+            @RequestParam(defaultValue = "name") String sort,
+            @RequestParam(defaultValue = "asc") String type
+    ) {
+       Page <CategoryResponse> responses= categoryService.pageableCategory(page,size,sort,type);
+       return ResponseEntity.ok(responses);
     }
 
 }
