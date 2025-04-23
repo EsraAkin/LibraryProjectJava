@@ -44,8 +44,10 @@ public class ErrorMessages {
 
   //category
   public static final String CATEGORY_NOT_FOUND = "There is no category like that, check the database";
-  public static final String CATEGORY_ALREADY_MESSAGE_SEQUENCE = "Error: Category Sequence is already used";
+  public static final String CATEGORY_SEQUENCE_ALREADY_EXISTS_MESSAGE = "Error: Category Sequence is already used";
   public static final String CATEGORY_ALREADY_MESSAGE_NAME = "Error: Category name is already used";
+  public static final String CATEGORY_NOT_PERMITTED_METHOD_MESSAGE = "You cannot update a built-in category. This category is protected by the system.";
+
 
   //publisher
   public static final String PUBLISHER_NOT_FOUND = "There is no publisher like that, check the database";

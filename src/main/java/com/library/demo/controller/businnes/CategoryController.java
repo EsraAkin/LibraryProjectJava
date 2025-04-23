@@ -41,4 +41,15 @@ public class CategoryController {
         return categoryService.getCategoryByIdRes(categoryId);
 
     }
+
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
+    @PutMapping("/categories/{categoryId}")
+    public ResponseMessage<CategoryResponse> updateCategory(@RequestBody @Valid CategoryRequest categoryRequest,
+                                                            @PathVariable Long categoryId){
+        return categoryService.updateCategory(categoryRequest, categoryId);
+
+    }
+
+
+
 }

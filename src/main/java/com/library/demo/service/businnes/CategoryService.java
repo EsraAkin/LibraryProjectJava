@@ -38,7 +38,7 @@ public class CategoryService {
 
         //unique controll
         if (categoryRepository.existsBySequence(categoryRequest.getSequence())) {
-            throw new ConflictException(ErrorMessages.CATEGORY_ALREADY_MESSAGE_SEQUENCE);
+            throw new ConflictException(ErrorMessages.CATEGORY_SEQUENCE_ALREADY_EXISTS_MESSAGE);
         }
 
         if (categoryRepository.existsByNameIgnoreCase(categoryRequest.getName())) {
@@ -65,6 +65,46 @@ public class CategoryService {
         return ResponseMessage.<CategoryResponse>builder()
                 .message(SuccessMessages.CATEGORY_FOUND)
                 .returnBody(categoryMappers.mapCategoryToCategoryResponse(getCategoryById(categoryId)))
+                .httpStatus(HttpStatus.OK)
+                .build();
+    }
+
+    public ResponseMessage<CategoryResponse> updateCategory(@Valid CategoryRequest categoryRequest, Long categoryId) {
+
+        //exist DB category
+        Category existingCategory = getCategoryById(categoryId);
+
+        //is BuiltIn
+        if (Boolean.TRUE.equals(existingCategory.getBuiltIn())) {
+            throw new ConflictException(ErrorMessages.CATEGORY_NOT_PERMITTED_METHOD_MESSAGE);
+        }
+
+        //name unique validation
+        if (!existingCategory.getName().equalsIgnoreCase(categoryRequest.getName()) &&
+                categoryRepository.equals(categoryRequest.getName())) {
+            throw new ConflictException(ErrorMessages.CATEGORY_ALREADY_MESSAGE_NAME);
+
+        }
+
+        //sequence unique validation
+        if (existingCategory.getSequence() != categoryRequest.getSequence() &&
+                categoryRepository.existsBySequence(categoryRequest.getSequence())) {
+            throw new ConflictException(ErrorMessages.CATEGORY_SEQUENCE_ALREADY_EXISTS_MESSAGE);
+        }
+
+        //update
+        existingCategory.setName(categoryRequest.getName());
+        existingCategory.setSequence(categoryRequest.getSequence());
+        existingCategory.setId(existingCategory.getId());
+
+        //save
+        Category updatedCategory = categoryRepository.save(existingCategory);
+
+
+        //return
+        return ResponseMessage.<CategoryResponse>builder()
+                .message(SuccessMessages.CATEGORY_UPDATE)
+                .returnBody(categoryMappers.mapCategoryToCategoryResponse(updatedCategory))
                 .httpStatus(HttpStatus.OK)
                 .build();
     }
