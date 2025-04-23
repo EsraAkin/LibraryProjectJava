@@ -2,6 +2,7 @@ package com.library.demo.service.businnes;
 
 import com.library.demo.entity.businnes.Author;
 import com.library.demo.entity.businnes.Publisher;
+import com.library.demo.exception.ConflictException;
 import com.library.demo.exception.ResourceNotFoundException;
 import com.library.demo.payload.mappers.AuthorMappers;
 import com.library.demo.payload.messages.ErrorMessages;
@@ -60,4 +61,21 @@ public class AuthorService {
                 .build();
 
     }
-}
+
+    public ResponseMessage<AuthorResponse> updateAuthor(@Valid AuthorRequest authorRequest, Long authorId) {
+        Author existingAuthor=getAuthorById(authorId);
+        if (Boolean.TRUE.equals(existingAuthor.getBuiltIn())) {
+            throw new ConflictException(ErrorMessages.NOT_PERMITTED_METHOD_MESSAGE);
+        }
+        existingAuthor.setName(authorRequest.getName());
+        Author updatedAuthor=authorRepository.save(existingAuthor);
+        return ResponseMessage.<AuthorResponse>builder()
+                .message(SuccessMessages.AUTHOR_UPDATE)
+                .httpStatus(HttpStatus.OK)
+                .returnBody(authorMappers.mapAuthorToAuthorResponse(updatedAuthor))
+                .build();
+    }
+
+
+    }
+

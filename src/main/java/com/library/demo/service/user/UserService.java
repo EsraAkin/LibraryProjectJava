@@ -142,7 +142,7 @@ public class UserService {
         // Yetki kontrolü yap
         methodHelper.validateUserUpdatePermission(currentUser, userToUpdate);
 
-        // 🔒 Benzersizlik kontrolü
+        // Benzersizlik kontrolü
         userUniquePropertyValidator.checkUniqueProperty(userToUpdate, userUpdateRequest);
 
         // Güncellenebilir alanları set et

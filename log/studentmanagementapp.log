@@ -1,24 +1,24 @@
-"2025-04-21 21:55:43,705 INFO  [restartedMain] com.library.demo.DemoApplication:Starting DemoApplication using Java 18.0.2 with PID 31080 (C:\Users\Esra\IdeaProjects\LibraryManagementProjectJava\target\classes started by Esra in C:\Users\Esra\IdeaProjects\LibraryManagementProjectJava)
-""2025-04-21 21:55:43,719 INFO  [restartedMain] com.library.demo.DemoApplication:No active profile set, falling back to 1 default profile: "default"
-""2025-04-21 21:55:43,875 INFO  [restartedMain] org.springframework.boot.devtools.env.DevToolsPropertyDefaultsPostProcessor:Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
-""2025-04-21 21:55:43,877 INFO  [restartedMain] org.springframework.boot.devtools.env.DevToolsPropertyDefaultsPostProcessor:For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
-""2025-04-21 21:55:45,325 INFO  [restartedMain] org.springframework.data.repository.config.RepositoryConfigurationDelegate:Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-""2025-04-21 21:55:45,476 INFO  [restartedMain] org.springframework.data.repository.config.RepositoryConfigurationDelegate:Finished Spring Data repository scanning in 138 ms. Found 7 JPA repository interfaces.
-""2025-04-21 21:55:46,728 INFO  [restartedMain] org.springframework.boot.web.embedded.tomcat.TomcatWebServer:Tomcat initialized with port 8095 (http)
-""2025-04-21 21:55:46,759 INFO  [restartedMain] org.apache.catalina.core.StandardService:Starting service [Tomcat]
-""2025-04-21 21:55:46,759 INFO  [restartedMain] org.apache.catalina.core.StandardEngine:Starting Servlet engine: [Apache Tomcat/10.1.19]
-""2025-04-21 21:55:46,863 INFO  [restartedMain] org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/]:Initializing Spring embedded WebApplicationContext
-""2025-04-21 21:55:46,864 INFO  [restartedMain] org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext:Root WebApplicationContext: initialization completed in 2985 ms
-""2025-04-21 21:55:47,666 INFO  [restartedMain] org.hibernate.jpa.internal.util.LogHelper:HHH000204: Processing PersistenceUnitInfo [name: default]
-""2025-04-21 21:55:47,924 INFO  [restartedMain] org.hibernate.Version:HHH000412: Hibernate ORM core version 6.4.4.Final
-""2025-04-21 21:55:48,000 INFO  [restartedMain] org.hibernate.cache.internal.RegionFactoryInitiator:HHH000026: Second-level cache disabled
-""2025-04-21 21:55:48,524 INFO  [restartedMain] org.springframework.orm.jpa.persistenceunit.SpringPersistenceUnitInfo:No LoadTimeWeaver setup: ignoring JPA class transformer
-""2025-04-21 21:55:48,576 INFO  [restartedMain] com.zaxxer.hikari.HikariDataSource:HikariPool-1 - Starting...
-""2025-04-21 21:55:48,911 INFO  [restartedMain] com.zaxxer.hikari.pool.HikariPool:HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@7d141618
-""2025-04-21 21:55:48,914 INFO  [restartedMain] com.zaxxer.hikari.HikariDataSource:HikariPool-1 - Start completed.
-""2025-04-21 21:55:49,014 WARN  [restartedMain] org.hibernate.orm.deprecation:HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
-""2025-04-21 21:55:50,800 INFO  [restartedMain] org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator:HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
-""2025-04-21 21:55:50,943 WARN  [restartedMain] org.hibernate.tool.schema.internal.ExceptionHandlerLoggedImpl:GenerationTarget encountered exception accepting command : Error executing DDL "alter table if exists book add constraint FKam9riv8y6rjwkua1gapdfew4j foreign key (category_id) references category" via JDBC [HATA: "book" tablosu üzerindeki ekleme veya güncelleme işlemi "fkam9riv8y6rjwkua1gapdfew4j" foreign key kısıtlamasını ihlal ediyor
+"2025-04-23 13:59:36,241 INFO  [restartedMain] com.library.demo.DemoApplication:Starting DemoApplication using Java 18.0.2 with PID 2036 (C:\Users\Esra\IdeaProjects\LibraryManagementProjectJava\target\classes started by Esra in C:\Users\Esra\IdeaProjects\LibraryManagementProjectJava)
+""2025-04-23 13:59:36,254 INFO  [restartedMain] com.library.demo.DemoApplication:No active profile set, falling back to 1 default profile: "default"
+""2025-04-23 13:59:36,343 INFO  [restartedMain] org.springframework.boot.devtools.env.DevToolsPropertyDefaultsPostProcessor:Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+""2025-04-23 13:59:36,344 INFO  [restartedMain] org.springframework.boot.devtools.env.DevToolsPropertyDefaultsPostProcessor:For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+""2025-04-23 13:59:37,620 INFO  [restartedMain] org.springframework.data.repository.config.RepositoryConfigurationDelegate:Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+""2025-04-23 13:59:37,796 INFO  [restartedMain] org.springframework.data.repository.config.RepositoryConfigurationDelegate:Finished Spring Data repository scanning in 162 ms. Found 7 JPA repository interfaces.
+""2025-04-23 13:59:38,910 INFO  [restartedMain] org.springframework.boot.web.embedded.tomcat.TomcatWebServer:Tomcat initialized with port 8095 (http)
+""2025-04-23 13:59:38,942 INFO  [restartedMain] org.apache.catalina.core.StandardService:Starting service [Tomcat]
+""2025-04-23 13:59:38,943 INFO  [restartedMain] org.apache.catalina.core.StandardEngine:Starting Servlet engine: [Apache Tomcat/10.1.19]
+""2025-04-23 13:59:39,030 INFO  [restartedMain] org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/]:Initializing Spring embedded WebApplicationContext
+""2025-04-23 13:59:39,031 INFO  [restartedMain] org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext:Root WebApplicationContext: initialization completed in 2685 ms
+""2025-04-23 13:59:39,336 INFO  [restartedMain] org.hibernate.jpa.internal.util.LogHelper:HHH000204: Processing PersistenceUnitInfo [name: default]
+""2025-04-23 13:59:39,480 INFO  [restartedMain] org.hibernate.Version:HHH000412: Hibernate ORM core version 6.4.4.Final
+""2025-04-23 13:59:39,551 INFO  [restartedMain] org.hibernate.cache.internal.RegionFactoryInitiator:HHH000026: Second-level cache disabled
+""2025-04-23 13:59:39,949 INFO  [restartedMain] org.springframework.orm.jpa.persistenceunit.SpringPersistenceUnitInfo:No LoadTimeWeaver setup: ignoring JPA class transformer
+""2025-04-23 13:59:39,992 INFO  [restartedMain] com.zaxxer.hikari.HikariDataSource:HikariPool-1 - Starting...
+""2025-04-23 13:59:40,305 INFO  [restartedMain] com.zaxxer.hikari.pool.HikariPool:HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@b817a82
+""2025-04-23 13:59:40,307 INFO  [restartedMain] com.zaxxer.hikari.HikariDataSource:HikariPool-1 - Start completed.
+""2025-04-23 13:59:40,377 WARN  [restartedMain] org.hibernate.orm.deprecation:HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+""2025-04-23 13:59:42,411 INFO  [restartedMain] org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator:HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+""2025-04-23 13:59:42,538 WARN  [restartedMain] org.hibernate.tool.schema.internal.ExceptionHandlerLoggedImpl:GenerationTarget encountered exception accepting command : Error executing DDL "alter table if exists book add constraint FKam9riv8y6rjwkua1gapdfew4j foreign key (category_id) references category" via JDBC [HATA: "book" tablosu üzerindeki ekleme veya güncelleme işlemi "fkam9riv8y6rjwkua1gapdfew4j" foreign key kısıtlamasını ihlal ediyor
   Ayrıntı: "category" tablosunda (category_id)=(2) anahtarı mevcut değildir.]
 "org.hibernate.tool.schema.spi.CommandAcceptanceException: Error executing DDL "alter table if exists book add constraint FKam9riv8y6rjwkua1gapdfew4j foreign key (category_id) references category" via JDBC [HATA: "book" tablosu üzerindeki ekleme veya güncelleme işlemi "fkam9riv8y6rjwkua1gapdfew4j" foreign key kısıtlamasını ihlal ediyor
   Ayrıntı: "category" tablosunda (category_id)=(2) anahtarı mevcut değildir.]
@@ -177,214 +177,25 @@ Caused by: org.postgresql.util.PSQLException: HATA: "book" tablosu üzerindeki e
 	at com.zaxxer.hikari.pool.HikariProxyStatement.execute(HikariProxyStatement.java)
 	at org.hibernate.tool.schema.internal.exec.GenerationTargetToDatabase.accept(GenerationTargetToDatabase.java:80)
 	... 139 common frames omitted
-"2025-04-21 21:55:51,030 INFO  [restartedMain] org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean:Initialized JPA EntityManagerFactory for persistence unit 'default'
-""2025-04-21 21:55:51,760 INFO  [restartedMain] org.springframework.data.jpa.repository.query.QueryEnhancerFactory:Hibernate is in classpath; If applicable, HQL parser will be used.
-""2025-04-21 21:55:53,652 INFO  [restartedMain] org.springframework.security.web.DefaultSecurityFilterChain:Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@b7696b7, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@6dbe94a6, org.springframework.security.web.context.SecurityContextHolderFilter@2c04892a, org.springframework.security.web.header.HeaderWriterFilter@5f15a05b, org.springframework.web.filter.CorsFilter@36786b2c, org.springframework.security.web.authentication.logout.LogoutFilter@376ddbae, com.library.demo.security.jwt.AuthTokenFilter@391ea6a3, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@524b368b, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@1201b490, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@1b95487d, org.springframework.security.web.session.SessionManagementFilter@21e47bb3, org.springframework.security.web.access.ExceptionTranslationFilter@35e30965, org.springframework.security.web.access.intercept.AuthorizationFilter@47442d42]
-""2025-04-21 21:55:54,011 INFO  [restartedMain] org.springframework.boot.devtools.autoconfigure.OptionalLiveReloadServer:LiveReload server is running on port 35729
-""2025-04-21 21:55:54,066 INFO  [restartedMain] org.springframework.boot.web.embedded.tomcat.TomcatWebServer:Tomcat started on port 8095 (http) with context path ''
-""2025-04-21 21:55:54,078 INFO  [restartedMain] com.library.demo.DemoApplication:Started DemoApplication in 11.085 seconds (process running for 25.141)
-""2025-04-21 21:56:13,612 INFO  [http-nio-8095-exec-2] org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/]:Initializing Spring DispatcherServlet 'dispatcherServlet'
-""2025-04-21 21:56:13,727 ERROR [http-nio-8095-exec-2] com.library.demo.security.jwt.JwtUtils:JWT token is expired: JWT expired at 2025-04-20T19:00:40Z. Current time: 2025-04-21T21:56:13Z, a difference of 96933727 milliseconds.  Allowed clock skew: 0 milliseconds.
-""2025-04-21 21:56:13,733 ERROR [http-nio-8095-exec-2] com.library.demo.security.jwt.JwtUtils:JWT token is expired: JWT expired at 2025-04-20T19:00:40Z. Current time: 2025-04-21T21:56:13Z, a difference of 96933733 milliseconds.  Allowed clock skew: 0 milliseconds.
-""2025-04-21 21:56:33,721 ERROR [http-nio-8095-exec-3] com.library.demo.security.jwt.JwtUtils:JWT token is expired: JWT expired at 2025-04-20T19:00:40Z. Current time: 2025-04-21T21:56:33Z, a difference of 96953721 milliseconds.  Allowed clock skew: 0 milliseconds.
-""2025-04-21 21:56:33,724 ERROR [http-nio-8095-exec-3] com.library.demo.security.jwt.JwtUtils:JWT token is expired: JWT expired at 2025-04-20T19:00:40Z. Current time: 2025-04-21T21:56:33Z, a difference of 96953724 milliseconds.  Allowed clock skew: 0 milliseconds.
-""2025-04-21 21:56:45,157 ERROR [http-nio-8095-exec-4] com.library.demo.security.jwt.JwtUtils:JWT token is expired: JWT expired at 2025-04-20T19:00:40Z. Current time: 2025-04-21T21:56:45Z, a difference of 96965157 milliseconds.  Allowed clock skew: 0 milliseconds.
-""2025-04-21 21:56:45,159 ERROR [http-nio-8095-exec-4] com.library.demo.security.jwt.JwtUtils:JWT token is expired: JWT expired at 2025-04-20T19:00:40Z. Current time: 2025-04-21T21:56:45Z, a difference of 96965159 milliseconds.  Allowed clock skew: 0 milliseconds.
-""2025-04-21 21:57:58,591 ERROR [http-nio-8095-exec-7] com.library.demo.security.jwt.JwtUtils:JWT token is expired: JWT expired at 2025-04-20T19:00:40Z. Current time: 2025-04-21T21:57:58Z, a difference of 97038590 milliseconds.  Allowed clock skew: 0 milliseconds.
-""2025-04-21 21:57:58,592 ERROR [http-nio-8095-exec-7] com.library.demo.security.jwt.JwtUtils:JWT token is expired: JWT expired at 2025-04-20T19:00:40Z. Current time: 2025-04-21T21:57:58Z, a difference of 97038592 milliseconds.  Allowed clock skew: 0 milliseconds.
-""2025-04-21 21:57:58,714 ERROR [http-nio-8095-exec-7] com.library.demo.security.jwt.AuthEntryPointJwt:Unauthorized error: Full authentication is required to access this resource
-""2025-04-21 21:58:13,916 ERROR [http-nio-8095-exec-8] com.library.demo.security.jwt.JwtUtils:JWT token is expired: JWT expired at 2025-03-22T01:14:50Z. Current time: 2025-04-21T21:58:13Z, a difference of 2663003916 milliseconds.  Allowed clock skew: 0 milliseconds.
-""2025-04-21 21:58:13,918 ERROR [http-nio-8095-exec-8] com.library.demo.security.jwt.JwtUtils:JWT token is expired: JWT expired at 2025-03-22T01:14:50Z. Current time: 2025-04-21T21:58:13Z, a difference of 2663003918 milliseconds.  Allowed clock skew: 0 milliseconds.
-""2025-04-21 21:59:41,239 INFO  [SpringApplicationShutdownHook] org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean:Closing JPA EntityManagerFactory for persistence unit 'default'
-""2025-04-21 21:59:41,247 INFO  [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource:HikariPool-1 - Shutdown initiated...
-""2025-04-21 21:59:41,257 INFO  [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource:HikariPool-1 - Shutdown completed.
-""2025-04-21 22:04:30,010 INFO  [restartedMain] com.library.demo.DemoApplication:Starting DemoApplication using Java 18.0.2 with PID 21484 (C:\Users\Esra\IdeaProjects\LibraryManagementProjectJava\target\classes started by Esra in C:\Users\Esra\IdeaProjects\LibraryManagementProjectJava)
-""2025-04-21 22:04:30,014 INFO  [restartedMain] com.library.demo.DemoApplication:No active profile set, falling back to 1 default profile: "default"
-""2025-04-21 22:04:30,108 INFO  [restartedMain] org.springframework.boot.devtools.env.DevToolsPropertyDefaultsPostProcessor:Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
-""2025-04-21 22:04:30,108 INFO  [restartedMain] org.springframework.boot.devtools.env.DevToolsPropertyDefaultsPostProcessor:For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
-""2025-04-21 22:04:31,535 INFO  [restartedMain] org.springframework.data.repository.config.RepositoryConfigurationDelegate:Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-""2025-04-21 22:04:31,716 INFO  [restartedMain] org.springframework.data.repository.config.RepositoryConfigurationDelegate:Finished Spring Data repository scanning in 163 ms. Found 7 JPA repository interfaces.
-""2025-04-21 22:04:33,207 INFO  [restartedMain] org.springframework.boot.web.embedded.tomcat.TomcatWebServer:Tomcat initialized with port 8095 (http)
-""2025-04-21 22:04:33,231 INFO  [restartedMain] org.apache.catalina.core.StandardService:Starting service [Tomcat]
-""2025-04-21 22:04:33,231 INFO  [restartedMain] org.apache.catalina.core.StandardEngine:Starting Servlet engine: [Apache Tomcat/10.1.19]
-""2025-04-21 22:04:33,325 INFO  [restartedMain] org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/]:Initializing Spring embedded WebApplicationContext
-""2025-04-21 22:04:33,326 INFO  [restartedMain] org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext:Root WebApplicationContext: initialization completed in 3216 ms
-""2025-04-21 22:04:33,648 INFO  [restartedMain] org.hibernate.jpa.internal.util.LogHelper:HHH000204: Processing PersistenceUnitInfo [name: default]
-""2025-04-21 22:04:33,804 INFO  [restartedMain] org.hibernate.Version:HHH000412: Hibernate ORM core version 6.4.4.Final
-""2025-04-21 22:04:33,872 INFO  [restartedMain] org.hibernate.cache.internal.RegionFactoryInitiator:HHH000026: Second-level cache disabled
-""2025-04-21 22:04:34,380 INFO  [restartedMain] org.springframework.orm.jpa.persistenceunit.SpringPersistenceUnitInfo:No LoadTimeWeaver setup: ignoring JPA class transformer
-""2025-04-21 22:04:34,425 INFO  [restartedMain] com.zaxxer.hikari.HikariDataSource:HikariPool-1 - Starting...
-""2025-04-21 22:04:34,811 INFO  [restartedMain] com.zaxxer.hikari.pool.HikariPool:HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@41769004
-""2025-04-21 22:04:34,813 INFO  [restartedMain] com.zaxxer.hikari.HikariDataSource:HikariPool-1 - Start completed.
-""2025-04-21 22:04:34,861 WARN  [restartedMain] org.hibernate.orm.deprecation:HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
-""2025-04-21 22:04:36,489 INFO  [restartedMain] org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator:HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
-""2025-04-21 22:04:36,596 WARN  [restartedMain] org.hibernate.tool.schema.internal.ExceptionHandlerLoggedImpl:GenerationTarget encountered exception accepting command : Error executing DDL "alter table if exists book add constraint FKam9riv8y6rjwkua1gapdfew4j foreign key (category_id) references category" via JDBC [HATA: "book" tablosu üzerindeki ekleme veya güncelleme işlemi "fkam9riv8y6rjwkua1gapdfew4j" foreign key kısıtlamasını ihlal ediyor
-  Ayrıntı: "category" tablosunda (category_id)=(2) anahtarı mevcut değildir.]
-"org.hibernate.tool.schema.spi.CommandAcceptanceException: Error executing DDL "alter table if exists book add constraint FKam9riv8y6rjwkua1gapdfew4j foreign key (category_id) references category" via JDBC [HATA: "book" tablosu üzerindeki ekleme veya güncelleme işlemi "fkam9riv8y6rjwkua1gapdfew4j" foreign key kısıtlamasını ihlal ediyor
-  Ayrıntı: "category" tablosunda (category_id)=(2) anahtarı mevcut değildir.]
-	at org.hibernate.tool.schema.internal.exec.GenerationTargetToDatabase.accept(GenerationTargetToDatabase.java:94)
-	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.applySqlString(AbstractSchemaMigrator.java:574)
-	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.applySqlStrings(AbstractSchemaMigrator.java:514)
-	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.applyForeignKeys(AbstractSchemaMigrator.java:446)
-	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.performMigration(AbstractSchemaMigrator.java:268)
-	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.doMigration(AbstractSchemaMigrator.java:117)
-	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.performDatabaseAction(SchemaManagementToolCoordinator.java:286)
-	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.lambda$process$5(SchemaManagementToolCoordinator.java:145)
-	at java.base/java.util.HashMap.forEach(HashMap.java:1421)
-	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.process(SchemaManagementToolCoordinator.java:142)
-	at org.hibernate.boot.internal.SessionFactoryObserverForSchemaExport.sessionFactoryCreated(SessionFactoryObserverForSchemaExport.java:37)
-	at org.hibernate.internal.SessionFactoryObserverChain.sessionFactoryCreated(SessionFactoryObserverChain.java:35)
-	at org.hibernate.internal.SessionFactoryImpl.<init>(SessionFactoryImpl.java:315)
-	at org.hibernate.boot.internal.SessionFactoryBuilderImpl.build(SessionFactoryBuilderImpl.java:450)
-	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.build(EntityManagerFactoryBuilderImpl.java:1507)
-	at org.springframework.orm.jpa.vendor.SpringHibernateJpaPersistenceProvider.createContainerEntityManagerFactory(SpringHibernateJpaPersistenceProvider.java:75)
-	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.createNativeEntityManagerFactory(LocalContainerEntityManagerFactoryBean.java:390)
-	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.buildNativeEntityManagerFactory(AbstractEntityManagerFactoryBean.java:409)
-	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.afterPropertiesSet(AbstractEntityManagerFactoryBean.java:396)
-	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.afterPropertiesSet(LocalContainerEntityManagerFactoryBean.java:366)
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1833)
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1782)
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:600)
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:522)
-	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:326)
-	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
-	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:324)
-	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:200)
-	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveReference(BeanDefinitionValueResolver.java:365)
-	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveValueIfNecessary(BeanDefinitionValueResolver.java:135)
-	at org.springframework.beans.factory.support.ConstructorResolver.resolveConstructorArguments(ConstructorResolver.java:682)
-	at org.springframework.beans.factory.support.ConstructorResolver.instantiateUsingFactoryMethod(ConstructorResolver.java:509)
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateUsingFactoryMethod(AbstractAutowireCapableBeanFactory.java:1335)
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1165)
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:562)
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:522)
-	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:326)
-	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
-	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:324)
-	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:200)
-	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveReference(BeanDefinitionValueResolver.java:365)
-	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveValueIfNecessary(BeanDefinitionValueResolver.java:135)
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.applyPropertyValues(AbstractAutowireCapableBeanFactory.java:1685)
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1434)
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:599)
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:522)
-	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:326)
-	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
-	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:324)
-	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:200)
-	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:254)
-	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1443)
-	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1353)
-	at org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:904)
-	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:782)
-	at org.springframework.beans.factory.support.ConstructorResolver.autowireConstructor(ConstructorResolver.java:237)
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.autowireConstructor(AbstractAutowireCapableBeanFactory.java:1355)
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1192)
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:562)
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:522)
-	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:326)
-	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
-	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:324)
-	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:200)
-	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:254)
-	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1443)
-	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1353)
-	at org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:904)
-	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:782)
-	at org.springframework.beans.factory.support.ConstructorResolver.autowireConstructor(ConstructorResolver.java:237)
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.autowireConstructor(AbstractAutowireCapableBeanFactory.java:1355)
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1192)
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:562)
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:522)
-	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:326)
-	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
-	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:324)
-	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:200)
-	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:254)
-	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1443)
-	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1353)
-	at org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:904)
-	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:782)
-	at org.springframework.beans.factory.support.ConstructorResolver.autowireConstructor(ConstructorResolver.java:237)
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.autowireConstructor(AbstractAutowireCapableBeanFactory.java:1355)
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1192)
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:562)
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:522)
-	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:326)
-	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
-	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:324)
-	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:205)
-	at org.springframework.boot.web.servlet.ServletContextInitializerBeans.getOrderedBeansOfType(ServletContextInitializerBeans.java:210)
-	at org.springframework.boot.web.servlet.ServletContextInitializerBeans.addAsRegistrationBean(ServletContextInitializerBeans.java:173)
-	at org.springframework.boot.web.servlet.ServletContextInitializerBeans.addAsRegistrationBean(ServletContextInitializerBeans.java:168)
-	at org.springframework.boot.web.servlet.ServletContextInitializerBeans.addAdaptableBeans(ServletContextInitializerBeans.java:153)
-	at org.springframework.boot.web.servlet.ServletContextInitializerBeans.<init>(ServletContextInitializerBeans.java:86)
-	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.getServletContextInitializerBeans(ServletWebServerApplicationContext.java:266)
-	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.selfInitialize(ServletWebServerApplicationContext.java:240)
-	at org.springframework.boot.web.embedded.tomcat.TomcatStarter.onStartup(TomcatStarter.java:52)
-	at org.apache.catalina.core.StandardContext.startInternal(StandardContext.java:4866)
-	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:171)
-	at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1332)
-	at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1322)
-	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
-	at org.apache.tomcat.util.threads.InlineExecutorService.execute(InlineExecutorService.java:75)
-	at java.base/java.util.concurrent.AbstractExecutorService.submit(AbstractExecutorService.java:145)
-	at org.apache.catalina.core.ContainerBase.startInternal(ContainerBase.java:866)
-	at org.apache.catalina.core.StandardHost.startInternal(StandardHost.java:845)
-	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:171)
-	at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1332)
-	at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1322)
-	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
-	at org.apache.tomcat.util.threads.InlineExecutorService.execute(InlineExecutorService.java:75)
-	at java.base/java.util.concurrent.AbstractExecutorService.submit(AbstractExecutorService.java:145)
-	at org.apache.catalina.core.ContainerBase.startInternal(ContainerBase.java:866)
-	at org.apache.catalina.core.StandardEngine.startInternal(StandardEngine.java:240)
-	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:171)
-	at org.apache.catalina.core.StandardService.startInternal(StandardService.java:433)
-	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:171)
-	at org.apache.catalina.core.StandardServer.startInternal(StandardServer.java:921)
-	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:171)
-	at org.apache.catalina.startup.Tomcat.start(Tomcat.java:437)
-	at org.springframework.boot.web.embedded.tomcat.TomcatWebServer.initialize(TomcatWebServer.java:126)
-	at org.springframework.boot.web.embedded.tomcat.TomcatWebServer.<init>(TomcatWebServer.java:105)
-	at org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory.getTomcatWebServer(TomcatServletWebServerFactory.java:499)
-	at org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory.getWebServer(TomcatServletWebServerFactory.java:218)
-	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.createWebServer(ServletWebServerApplicationContext.java:188)
-	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.onRefresh(ServletWebServerApplicationContext.java:162)
-	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:618)
-	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146)
-	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:754)
-	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:456)
-	at org.springframework.boot.SpringApplication.run(SpringApplication.java:334)
-	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1354)
-	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1343)
-	at com.library.demo.DemoApplication.main(DemoApplication.java:10)
-	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
-	at java.base/java.lang.reflect.Method.invoke(Method.java:577)
-	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:50)
-Caused by: org.postgresql.util.PSQLException: HATA: "book" tablosu üzerindeki ekleme veya güncelleme işlemi "fkam9riv8y6rjwkua1gapdfew4j" foreign key kısıtlamasını ihlal ediyor
-  Ayrıntı: "category" tablosunda (category_id)=(2) anahtarı mevcut değildir.
-	at org.postgresql.core.v3.QueryExecutorImpl.receiveErrorResponse(QueryExecutorImpl.java:2713)
-	at org.postgresql.core.v3.QueryExecutorImpl.processResults(QueryExecutorImpl.java:2401)
-	at org.postgresql.core.v3.QueryExecutorImpl.execute(QueryExecutorImpl.java:368)
-	at org.postgresql.jdbc.PgStatement.executeInternal(PgStatement.java:498)
-	at org.postgresql.jdbc.PgStatement.execute(PgStatement.java:415)
-	at org.postgresql.jdbc.PgStatement.executeWithFlags(PgStatement.java:335)
-	at org.postgresql.jdbc.PgStatement.executeCachedSql(PgStatement.java:321)
-	at org.postgresql.jdbc.PgStatement.executeWithFlags(PgStatement.java:297)
-	at org.postgresql.jdbc.PgStatement.execute(PgStatement.java:292)
-	at com.zaxxer.hikari.pool.ProxyStatement.execute(ProxyStatement.java:94)
-	at com.zaxxer.hikari.pool.HikariProxyStatement.execute(HikariProxyStatement.java)
-	at org.hibernate.tool.schema.internal.exec.GenerationTargetToDatabase.accept(GenerationTargetToDatabase.java:80)
-	... 139 common frames omitted
-"2025-04-21 22:04:36,655 INFO  [restartedMain] org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean:Initialized JPA EntityManagerFactory for persistence unit 'default'
-""2025-04-21 22:04:37,215 INFO  [restartedMain] org.springframework.data.jpa.repository.query.QueryEnhancerFactory:Hibernate is in classpath; If applicable, HQL parser will be used.
-""2025-04-21 22:04:38,941 INFO  [restartedMain] org.springframework.security.web.DefaultSecurityFilterChain:Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@2cec9fa8, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@5d8a9c26, org.springframework.security.web.context.SecurityContextHolderFilter@6f900a4f, org.springframework.security.web.header.HeaderWriterFilter@74e19bc4, org.springframework.web.filter.CorsFilter@18a20b2e, org.springframework.security.web.authentication.logout.LogoutFilter@6d241884, com.library.demo.security.jwt.AuthTokenFilter@2cb6ace3, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@34b48a78, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@193115aa, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@7fb40a2f, org.springframework.security.web.session.SessionManagementFilter@2522b2f4, org.springframework.security.web.access.ExceptionTranslationFilter@2d0344bf, org.springframework.security.web.access.intercept.AuthorizationFilter@291b1192]
-""2025-04-21 22:04:39,334 INFO  [restartedMain] org.springframework.boot.devtools.autoconfigure.OptionalLiveReloadServer:LiveReload server is running on port 35729
-""2025-04-21 22:04:39,405 INFO  [restartedMain] org.springframework.boot.web.embedded.tomcat.TomcatWebServer:Tomcat started on port 8095 (http) with context path ''
-""2025-04-21 22:04:39,419 INFO  [restartedMain] com.library.demo.DemoApplication:Started DemoApplication in 10.097 seconds (process running for 10.876)
-""2025-04-21 22:05:24,552 INFO  [http-nio-8095-exec-2] org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/]:Initializing Spring DispatcherServlet 'dispatcherServlet'
-""2025-04-21 22:06:02,948 INFO  [SpringApplicationShutdownHook] org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean:Closing JPA EntityManagerFactory for persistence unit 'default'
-""2025-04-21 22:06:02,956 INFO  [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource:HikariPool-1 - Shutdown initiated...
-""2025-04-21 22:06:02,967 INFO  [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource:HikariPool-1 - Shutdown completed.
+"2025-04-23 13:59:42,610 INFO  [restartedMain] org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean:Initialized JPA EntityManagerFactory for persistence unit 'default'
+""2025-04-23 13:59:43,305 INFO  [restartedMain] org.springframework.data.jpa.repository.query.QueryEnhancerFactory:Hibernate is in classpath; If applicable, HQL parser will be used.
+""2025-04-23 13:59:44,976 INFO  [restartedMain] org.springframework.security.web.DefaultSecurityFilterChain:Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@7384b86, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@5247877a, org.springframework.security.web.context.SecurityContextHolderFilter@11ce1d14, org.springframework.security.web.header.HeaderWriterFilter@2c1176cf, org.springframework.web.filter.CorsFilter@3186e1c5, org.springframework.security.web.authentication.logout.LogoutFilter@56665056, com.library.demo.security.jwt.AuthTokenFilter@1231ef9c, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@1d7d2980, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@3cb518fa, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@6bdc8276, org.springframework.security.web.session.SessionManagementFilter@589c9d4e, org.springframework.security.web.access.ExceptionTranslationFilter@6b5a9853, org.springframework.security.web.access.intercept.AuthorizationFilter@1d591e6d]
+""2025-04-23 13:59:45,366 INFO  [restartedMain] org.springframework.boot.devtools.autoconfigure.OptionalLiveReloadServer:LiveReload server is running on port 35729
+""2025-04-23 13:59:45,434 INFO  [restartedMain] org.springframework.boot.web.embedded.tomcat.TomcatWebServer:Tomcat started on port 8095 (http) with context path ''
+""2025-04-23 13:59:45,445 INFO  [restartedMain] com.library.demo.DemoApplication:Started DemoApplication in 9.869 seconds (process running for 12.472)
+""2025-04-23 14:03:20,205 INFO  [http-nio-8095-exec-2] org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/]:Initializing Spring DispatcherServlet 'dispatcherServlet'
+""2025-04-23 14:03:20,307 ERROR [http-nio-8095-exec-2] com.library.demo.security.jwt.JwtUtils:JWT token is expired: JWT expired at 2025-04-22T00:22:14Z. Current time: 2025-04-23T14:03:20Z, a difference of 135666306 milliseconds.  Allowed clock skew: 0 milliseconds.
+""2025-04-23 14:03:20,312 ERROR [http-nio-8095-exec-2] com.library.demo.security.jwt.JwtUtils:JWT token is expired: JWT expired at 2025-04-22T00:22:14Z. Current time: 2025-04-23T14:03:20Z, a difference of 135666312 milliseconds.  Allowed clock skew: 0 milliseconds.
+""2025-04-23 14:03:20,346 ERROR [http-nio-8095-exec-2] com.library.demo.security.jwt.AuthEntryPointJwt:Unauthorized error: Full authentication is required to access this resource
+""2025-04-23 14:05:55,901 ERROR [http-nio-8095-exec-5] com.library.demo.security.jwt.JwtUtils:JWT token is expired: JWT expired at 2025-04-22T00:22:14Z. Current time: 2025-04-23T14:05:55Z, a difference of 135821901 milliseconds.  Allowed clock skew: 0 milliseconds.
+""2025-04-23 14:05:55,904 ERROR [http-nio-8095-exec-5] com.library.demo.security.jwt.JwtUtils:JWT token is expired: JWT expired at 2025-04-22T00:22:14Z. Current time: 2025-04-23T14:05:55Z, a difference of 135821903 milliseconds.  Allowed clock skew: 0 milliseconds.
+""2025-04-23 14:06:13,370 ERROR [http-nio-8095-exec-6] com.library.demo.security.jwt.JwtUtils:JWT token is expired: JWT expired at 2025-04-22T00:22:14Z. Current time: 2025-04-23T14:06:13Z, a difference of 135839369 milliseconds.  Allowed clock skew: 0 milliseconds.
+""2025-04-23 14:06:13,371 ERROR [http-nio-8095-exec-6] com.library.demo.security.jwt.JwtUtils:JWT token is expired: JWT expired at 2025-04-22T00:22:14Z. Current time: 2025-04-23T14:06:13Z, a difference of 135839371 milliseconds.  Allowed clock skew: 0 milliseconds.
+""2025-04-23 14:06:13,488 ERROR [http-nio-8095-exec-6] com.library.demo.security.jwt.AuthEntryPointJwt:Unauthorized error: Full authentication is required to access this resource
+""2025-04-23 14:06:28,373 ERROR [http-nio-8095-exec-7] com.library.demo.security.jwt.JwtUtils:JWT token is expired: JWT expired at 2025-03-22T01:14:50Z. Current time: 2025-04-23T14:06:28Z, a difference of 2807498373 milliseconds.  Allowed clock skew: 0 milliseconds.
+""2025-04-23 14:06:28,377 ERROR [http-nio-8095-exec-7] com.library.demo.security.jwt.JwtUtils:JWT token is expired: JWT expired at 2025-03-22T01:14:50Z. Current time: 2025-04-23T14:06:28Z, a difference of 2807498377 milliseconds.  Allowed clock skew: 0 milliseconds.
+""2025-04-23 14:06:34,318 WARN  [http-nio-8095-exec-8] org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver:Resolved [com.library.demo.exception.ConflictException: You do not have any permission to do this operation]
+""2025-04-23 14:08:57,644 INFO  [SpringApplicationShutdownHook] org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean:Closing JPA EntityManagerFactory for persistence unit 'default'
+""2025-04-23 14:08:57,653 INFO  [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource:HikariPool-1 - Shutdown initiated...
+""2025-04-23 14:08:57,660 INFO  [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource:HikariPool-1 - Shutdown completed.
 "

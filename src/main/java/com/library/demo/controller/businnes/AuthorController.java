@@ -1,6 +1,7 @@
 package com.library.demo.controller.businnes;
 
 import com.library.demo.payload.request.businnes.AuthorRequest;
+import com.library.demo.payload.request.businnes.PublisherRequest;
 import com.library.demo.payload.response.businnes.AuthorResponse;
 import com.library.demo.payload.response.businnes.PublisherResponse;
 import com.library.demo.payload.response.businnes.ResponseMessage;
@@ -43,6 +44,14 @@ public class AuthorController {
         return authorService.getAuthorByIdRes(authorId);
     }
 
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
+    @PutMapping("/authors/{authorId}")
+    public ResponseMessage<AuthorResponse> updateAuthor(@RequestBody @Valid AuthorRequest authorRequest,
+                                                        @PathVariable Long authorId) {
+        return authorService.updateAuthor(authorRequest, authorId);
+
+
+    }
 
 
 }
