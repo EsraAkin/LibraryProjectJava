@@ -9,6 +9,7 @@ import com.library.demo.payload.messages.ErrorMessages;
 import com.library.demo.payload.messages.SuccessMessages;
 import com.library.demo.payload.request.businnes.CategoryResponse;
 import com.library.demo.payload.response.businnes.CategoryRequest;
+import com.library.demo.payload.response.businnes.PublisherResponse;
 import com.library.demo.payload.response.businnes.ResponseMessage;
 import com.library.demo.repository.businnes.CategoryRepository;
 import jakarta.validation.Valid;
@@ -58,5 +59,13 @@ public class CategoryService {
         Pageable pageable = PageRequest.of(page, size, Sort.by(direction, sort));
         Page<Category> categories = categoryRepository.findAll(pageable);
         return categories.map(categoryMappers::mapCategoryToCategoryResponse);
+    }
+
+    public ResponseMessage<CategoryResponse> getCategoryByIdRes(Long categoryId) {
+        return ResponseMessage.<CategoryResponse>builder()
+                .message(SuccessMessages.CATEGORY_FOUND)
+                .returnBody(categoryMappers.mapCategoryToCategoryResponse(getCategoryById(categoryId)))
+                .httpStatus(HttpStatus.OK)
+                .build();
     }
 }

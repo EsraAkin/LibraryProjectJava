@@ -108,6 +108,7 @@ public class WebSecurityConfig {
           "/books",
           "/publishers/**",
           "/authors/**",
+          "/categories/**",
 
 
   };

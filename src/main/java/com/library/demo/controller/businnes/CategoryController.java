@@ -32,8 +32,13 @@ public class CategoryController {
             @RequestParam(defaultValue = "name") String sort,
             @RequestParam(defaultValue = "asc") String type
     ) {
-       Page <CategoryResponse> responses= categoryService.pageableCategory(page,size,sort,type);
-       return ResponseEntity.ok(responses);
+        Page<CategoryResponse> responses = categoryService.pageableCategory(page, size, sort, type);
+        return ResponseEntity.ok(responses);
     }
 
+    @GetMapping("/categories/{categoryId}")
+    public ResponseMessage<CategoryResponse> getByIdCategory(@PathVariable Long categoryId){
+        return categoryService.getCategoryByIdRes(categoryId);
+
+    }
 }
