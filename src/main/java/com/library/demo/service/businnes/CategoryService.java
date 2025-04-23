@@ -108,4 +108,21 @@ public class CategoryService {
                 .httpStatus(HttpStatus.OK)
                 .build();
     }
+
+    public ResponseMessage<CategoryResponse> deleteCategory(Long categoryId) {
+        //exist Category DB
+        Category existingCategory = getCategoryById(categoryId);
+
+        // Eğer kategoriye bağlı kitaplar varsa, silinemez
+        if (existingCategory.getBooks() != null && !existingCategory.getBooks().isEmpty()) {
+            throw new ConflictException("This category cannot be deleted because it has associated books.");
+        }
+        categoryRepository.deleteById(categoryId);
+        return ResponseMessage.<CategoryResponse>builder()
+                .message(SuccessMessages.CATEGORY_DELETE)
+                .returnBody(categoryMappers.mapCategoryToCategoryResponse(existingCategory))
+                .httpStatus(HttpStatus.OK)
+                .build();
+
+    }
 }

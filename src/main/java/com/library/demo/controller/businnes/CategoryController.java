@@ -50,6 +50,12 @@ public class CategoryController {
 
     }
 
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
+    @DeleteMapping("/categories/{categoryId}")
+    public ResponseMessage<CategoryResponse> deleteCategory(@PathVariable Long categoryId){
+        return categoryService.deleteCategory(categoryId);
+
+    }
 
 
 }
