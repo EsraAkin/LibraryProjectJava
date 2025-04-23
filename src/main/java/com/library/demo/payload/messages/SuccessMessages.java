@@ -35,4 +35,12 @@ public class SuccessMessages {
   public static final String AUTHOR_UPDATE = "Author is has been updated successfully";
   public static final String AUTHOR_DELETE ="Author is Deleted Successfully" ;
 
+  //Author
+  public static final String CATEGORY_CREATE = "Category has been created successfully";
+  public static final String CATEGORY_FOUND = "Category is Found Successfully";
+  public static final String CATEGORY_UPDATE = "Category is has been updated successfully";
+  public static final String CATEGORY_DELETE ="Category is Deleted Successfully" ;
+
+
+
 }

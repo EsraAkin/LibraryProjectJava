@@ -19,11 +19,12 @@ public class Category {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false, unique = true)
     private String name;
 
     private Boolean builtIn;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private int sequence;
 
 
