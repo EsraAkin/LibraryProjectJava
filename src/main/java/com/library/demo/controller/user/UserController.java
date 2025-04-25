@@ -3,8 +3,10 @@ package com.library.demo.controller.user;
 import com.library.demo.payload.request.user.UserRequest;
 import com.library.demo.payload.request.user.UserSaveRequest;
 import com.library.demo.payload.request.user.UserUpdateRequest;
+import com.library.demo.payload.response.businnes.LoanResponse;
 import com.library.demo.payload.response.businnes.ResponseMessage;
 import com.library.demo.payload.response.user.UserResponse;
+import com.library.demo.service.businnes.LoanService;
 import com.library.demo.service.user.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -12,6 +14,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
@@ -22,6 +25,7 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
 
     private final UserService userService;
+    private final LoanService loanService;
 
 
     @PostMapping("/register")
@@ -37,10 +41,19 @@ public class UserController {
     }
 
 
-    //TODO
-    /*/user/loans
-    post /user/loans?page=1&size=10&sort=createDate&type=desc
-    It will returnauthenticateduserloans */
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN', 'ROLE_STAFF', 'ROLE_MEMBER')")
+    @GetMapping("/user/loans")
+    public ResponseEntity<Page<LoanResponse>> getUserLoans(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "20") int size,
+            @RequestParam(defaultValue = "createDate") String sort,
+            @RequestParam(defaultValue = "desc") String type,
+            Authentication authentication) {
+
+        Page<LoanResponse> response = loanService.getAuthenticatedUserLoans(page, size, sort, type, authentication);
+        return ResponseEntity.ok(response);
+    }
+
 
 
     @PreAuthorize("hasAnyAuthority('ROLE_ADMIN', 'ROLE_STAFF')")
@@ -81,7 +94,6 @@ public class UserController {
     }
 
 
-    //TODO loan ekleyince kontrol et tekrar.
     @DeleteMapping("/users/{user_id}")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseMessage<UserResponse> deleteUser(@PathVariable Long user_id) {

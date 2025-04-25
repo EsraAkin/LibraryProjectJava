@@ -35,7 +35,6 @@ public class PublisherController {
         return ResponseEntity.ok(response);
     }
 
-    //TODO Anonymus olanlar için tekrar loginsiz test et. Whitelist kontrolü de yap.
     @GetMapping("publishers/{publisherId}")
     public ResponseMessage<PublisherResponse> getPublisherById(@PathVariable Long publisherId) {
         return publisherService.getPublisherByIdRes(publisherId);

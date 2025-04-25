@@ -40,7 +40,6 @@ public class BookController {
         return bookService.saveBook(bookRequest);
     }
 
-    //TODO postman kontrol et
 
     @GetMapping
     public Page<BookResponse> getBooks(

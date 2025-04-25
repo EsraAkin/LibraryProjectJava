@@ -39,8 +39,8 @@ public class LoanService {
 
 
     public Page<LoanResponse> getAllLoansOfAuthenticatedUser(int page, int size, String sort, String type, Authentication authentication) {
-        User user = methodHelper.loadByEmail(
-                ((UserDetailsImpl) authentication.getPrincipal()).getEmail());
+
+        User user = methodHelper.getAuthenticatedUser(authentication);
 
         Sort.Direction direction = type.equalsIgnoreCase("asc") ? Sort.Direction.ASC : Sort.Direction.DESC;
         Pageable pageable = PageRequest.of(page, size, Sort.by(direction, sort));
@@ -201,5 +201,21 @@ public class LoanService {
     }
 
 
+    public Page<LoanResponse> getAuthenticatedUserLoans(int page, int size, String sort, String type, Authentication authentication) {
+
+        // 1. Kullanıcıyı al
+        User user = methodHelper.getAuthenticatedUser(authentication);
+
+        // 2. Pageable oluştur
+        Sort.Direction direction = type.equalsIgnoreCase("desc") ? Sort.Direction.DESC : Sort.Direction.ASC;
+        Pageable pageable = PageRequest.of(page, size, Sort.by(direction, sort));
+
+        // 3. Kullanıcının loan'larını getir
+        Page<Loan> userLoans = loanRepository.findByUserId(user.getId(), pageable);
+
+        // 4. DTO'ya map et
+        return userLoans.map(loanMappers::mapLoanToLoanResponse);
+
+    }
 }
 

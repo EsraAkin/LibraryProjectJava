@@ -7,7 +7,9 @@ import com.library.demo.exception.ResourceNotFoundException;
 import com.library.demo.payload.messages.ErrorMessages;
 import com.library.demo.repository.businnes.BookRepository;
 import com.library.demo.repository.user.UserRepository;
+import com.library.demo.security.service.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
 
@@ -90,6 +92,11 @@ public class MethodHelper {
                 .anyMatch(userRole -> Arrays.asList(roles).contains(userRole));
     }
 
+// MethodHelper.java
+
+    public User getAuthenticatedUser(Authentication authentication) {
+        return loadByEmail(((UserDetailsImpl) authentication.getPrincipal()).getEmail());
+    }
 
 
 }
