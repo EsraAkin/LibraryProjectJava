@@ -173,4 +173,15 @@ public class UserService {
                 .returnBody(userMappers.mapUserToUserResponse(user))
                 .build();
     }
+
+
+
+    public User getUserByEmail(String email) {
+        return userRepository.findByEmail(email)
+                .orElseThrow(() -> new ResourceNotFoundException(ErrorMessages.NOT_FOUND_USER_MESSAGE + email));
+    }
+
+
+
+
 }

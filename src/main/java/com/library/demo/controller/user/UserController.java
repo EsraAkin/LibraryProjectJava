@@ -5,6 +5,7 @@ import com.library.demo.payload.request.user.UserSaveRequest;
 import com.library.demo.payload.request.user.UserUpdateRequest;
 import com.library.demo.payload.response.businnes.LoanResponse;
 import com.library.demo.payload.response.businnes.ResponseMessage;
+import com.library.demo.payload.response.businnes.UserLoanResponse;
 import com.library.demo.payload.response.user.UserResponse;
 import com.library.demo.service.businnes.LoanService;
 import com.library.demo.service.user.UserService;
@@ -43,14 +44,14 @@ public class UserController {
 
     @PreAuthorize("hasAnyAuthority('ROLE_ADMIN', 'ROLE_STAFF', 'ROLE_MEMBER')")
     @GetMapping("/user/loans")
-    public ResponseEntity<Page<LoanResponse>> getUserLoans(
+    public ResponseEntity<Page<UserLoanResponse>> getUserLoans(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "20") int size,
             @RequestParam(defaultValue = "createDate") String sort,
             @RequestParam(defaultValue = "desc") String type,
             Authentication authentication) {
 
-        Page<LoanResponse> response = loanService.getAuthenticatedUserLoans(page, size, sort, type, authentication);
+        Page<UserLoanResponse> response = loanService.getAuthenticatedUserLoans(page, size, sort, type, authentication);
         return ResponseEntity.ok(response);
     }
 

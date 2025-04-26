@@ -12,7 +12,10 @@ import java.util.List;
 public interface LoanRepository extends JpaRepository<Loan, Long> {
     List<Loan> findByUserIdAndReturnedFalse(Long userId);
     long countByUserIdAndReturnedFalse(Long userId);
-    Page<Loan> findByUserId(Long userId, Pageable pageable);
+
+   // Page<Loan> findByUserId(Long userId, Pageable pageable);
 
     Page<Loan> findByBookId(Long bookId, Pageable pageable);
+
+    Page<Loan> findByUserId(Long id, Pageable pageable);
 }

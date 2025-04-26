@@ -10,11 +10,14 @@ import com.library.demo.payload.messages.ErrorMessages;
 import com.library.demo.payload.request.businnes.LoanRequest;
 import com.library.demo.payload.request.businnes.LoanUpdateRequest;
 import com.library.demo.payload.response.businnes.LoanResponse;
+import com.library.demo.payload.response.businnes.UserLoanResponse;
+import com.library.demo.payload.response.user.UserResponse;
 import com.library.demo.repository.businnes.BookRepository;
 import com.library.demo.repository.businnes.LoanRepository;
 import com.library.demo.security.service.UserDetailsImpl;
 import com.library.demo.service.helper.LoanHelper;
 import com.library.demo.service.helper.MethodHelper;
+import com.library.demo.service.user.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -37,6 +40,7 @@ public class LoanService {
     private final BookRepository bookRepository;
     private final LoanMappers loanMappers;
 
+    private final UserService userService; // burada UserRepository yerine UserService
 
     public Page<LoanResponse> getAllLoansOfAuthenticatedUser(int page, int size, String sort, String type, Authentication authentication) {
 
@@ -201,21 +205,24 @@ public class LoanService {
     }
 
 
-    public Page<LoanResponse> getAuthenticatedUserLoans(int page, int size, String sort, String type, Authentication authentication) {
+    public Page<UserLoanResponse> getAuthenticatedUserLoans(int page, int size, String sort, String type, Authentication authentication) {
 
-        // 1. Kullanıcıyı al
         User user = methodHelper.getAuthenticatedUser(authentication);
 
-        // 2. Pageable oluştur
+        // Pageable oluştur
         Sort.Direction direction = type.equalsIgnoreCase("desc") ? Sort.Direction.DESC : Sort.Direction.ASC;
         Pageable pageable = PageRequest.of(page, size, Sort.by(direction, sort));
 
-        // 3. Kullanıcının loan'larını getir
+        // Kullanıcının loan'larını getir
         Page<Loan> userLoans = loanRepository.findByUserId(user.getId(), pageable);
+        System.out.println("Loan bulunma sayısı: " + userLoans.getTotalElements());
+        userLoans.forEach(loan -> System.out.println("Loan ID: " + loan.getId()));
 
-        // 4. DTO'ya map et
-        return userLoans.map(loanMappers::mapLoanToLoanResponse);
-
+        // Loan'ları UserLoanResponse'a map et ve dön
+        return userLoans.map(loanMappers::mapLoanToUserLoanResponse);
     }
+
+
+
 }
 

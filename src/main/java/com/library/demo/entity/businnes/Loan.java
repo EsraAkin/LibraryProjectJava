@@ -31,7 +31,7 @@ public class Loan {
 
     private boolean returned;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="user_id")
     private User user;
 
