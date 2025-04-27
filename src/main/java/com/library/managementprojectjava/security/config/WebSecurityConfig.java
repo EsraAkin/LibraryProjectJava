@@ -6,6 +6,7 @@ import com.library.managementprojectjava.security.service.UserDetailServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -62,7 +63,7 @@ public class WebSecurityConfig {
   @Bean
   public CorsConfigurationSource corsConfigurationSource() {
     CorsConfiguration config = new CorsConfiguration();
-    config.setAllowedOrigins(List.of("*")); // tüm kaynaklara izin
+    config.setAllowedOriginPatterns(List.of("*")); // tüm kaynaklara izin
     config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
     config.setAllowedHeaders(List.of("*"));
     config.setAllowCredentials(true); // Eğer frontend cookie ile çalışıyorsa true olmalı
@@ -82,6 +83,7 @@ public class WebSecurityConfig {
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(auth -> auth
                     .requestMatchers(AUTH_WHITELIST).permitAll()
+                    .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                     .anyRequest().authenticated())
             .authenticationProvider(authenticationProvider())
             .addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
@@ -102,9 +104,9 @@ public class WebSecurityConfig {
           "/auth/login",
           "/auth/register",
           "/auth/**",
-          "/books/**",
-          "/books**",
           "/books",
+          "/books/",
+          "/books/**",
           "/publishers/**",
           "/authors/**",
           "/categories/**"
