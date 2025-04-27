@@ -1,6 +1,7 @@
 package com.library.managementprojectjava.service.report;
 
 import com.library.managementprojectjava.payload.response.report.PopularBookResponse;
+import com.library.managementprojectjava.payload.response.report.PopularUserResponse;
 import com.library.managementprojectjava.payload.response.report.ReportResponse;
 import com.library.managementprojectjava.repository.businnes.*;
 import com.library.managementprojectjava.repository.user.UserRepository;
@@ -79,5 +80,19 @@ public class ReportService {
                 .toList();
 
         return new PageImpl<>(responses, pageable, expiredBooks.getTotalElements());
+    }
+
+    public Page<PopularUserResponse> getMostBorrowers(Pageable pageable) {
+        Page<Object[]> borrowers = loanRepository.findMostBorrowers(pageable);
+
+        List<PopularUserResponse> responses = borrowers
+                .stream()
+                .map(obj -> new PopularUserResponse(
+                        ((Number) obj[0]).longValue(),
+                        (String) obj[1]
+                ))
+                .toList();
+
+        return new PageImpl<>(responses, pageable, borrowers.getTotalElements());
     }
 }

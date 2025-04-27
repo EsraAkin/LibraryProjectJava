@@ -1,6 +1,7 @@
 package com.library.managementprojectjava.controller.report;
 
 import com.library.managementprojectjava.payload.response.report.PopularBookResponse;
+import com.library.managementprojectjava.payload.response.report.PopularUserResponse;
 import com.library.managementprojectjava.payload.response.report.ReportResponse;
 import com.library.managementprojectjava.service.report.ReportService;
 import lombok.RequiredArgsConstructor;
@@ -75,6 +76,16 @@ public class ReportController {
         return ResponseEntity.ok(response);
     }
 
+    @GetMapping("/most-borrowers")
+    @PreAuthorize("hasAnyAuthority('ROLE_STAFF', 'ROLE_ADMIN')")
+    public ResponseEntity<Page<PopularUserResponse>> getMostBorrowers(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "20") int size
+    ) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<PopularUserResponse> response = reportService.getMostBorrowers(pageable);
+        return ResponseEntity.ok(response);
+    }
 
 
 

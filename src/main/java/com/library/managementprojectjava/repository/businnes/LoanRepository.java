@@ -45,4 +45,14 @@ public interface LoanRepository extends JpaRepository<Loan, Long> {
       AND l.expireDate < CURRENT_TIMESTAMP
 """)
     Page<Object[]> findExpiredBooks(Pageable pageable);
+
+
+    @Query("""
+    SELECT u.id, u.firstName
+    FROM Loan l
+    JOIN l.user u
+    GROUP BY u.id, u.firstName
+    ORDER BY COUNT(l.id) DESC
+""")
+    Page<Object[]> findMostBorrowers(Pageable pageable);
 }
