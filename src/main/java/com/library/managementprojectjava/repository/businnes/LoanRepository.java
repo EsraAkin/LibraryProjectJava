@@ -37,5 +37,12 @@ public interface LoanRepository extends JpaRepository<Loan, Long> {
             "WHERE l.returned = false")
     Page<Object[]> findUnreturnedBooks(Pageable pageable);
 
-
+    @Query("""
+    SELECT b.id, b.name, b.isbn
+    FROM Loan l
+    JOIN l.book b
+    WHERE l.returned = false
+      AND l.expireDate < CURRENT_TIMESTAMP
+""")
+    Page<Object[]> findExpiredBooks(Pageable pageable);
 }

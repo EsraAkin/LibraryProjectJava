@@ -59,6 +59,21 @@ public class ReportController {
         return ResponseEntity.ok(response);
     }
 
+    @GetMapping("/expired-books")
+    @PreAuthorize("hasAnyAuthority('ROLE_STAFF', 'ROLE_ADMIN')")
+    public ResponseEntity<Page<PopularBookResponse>> getExpiredBooks(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "20") int size,
+            @RequestParam(defaultValue = "expireDate") String sort,
+            @RequestParam(defaultValue = "desc") String type
+    ) {
+        Pageable pageable = PageRequest.of(page, size,
+                type.equalsIgnoreCase("desc") ? Sort.by(sort).descending() : Sort.by(sort).ascending());
+
+        Page<PopularBookResponse> response = reportService.getExpiredBooks(pageable);
+
+        return ResponseEntity.ok(response);
+    }
 
 
 

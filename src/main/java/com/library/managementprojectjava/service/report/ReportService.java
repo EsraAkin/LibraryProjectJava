@@ -65,4 +65,19 @@ public class ReportService {
 
         return new PageImpl<>(response, pageable, unreturnedBooks.getTotalElements());
     }
+
+    public Page<PopularBookResponse> getExpiredBooks(Pageable pageable) {
+        Page<Object[]> expiredBooks = loanRepository.findExpiredBooks(pageable);
+
+        List<PopularBookResponse> responses = expiredBooks
+                .stream()
+                .map(obj -> new PopularBookResponse(
+                        ((Number) obj[0]).longValue(),
+                        (String) obj[1],
+                        (String) obj[2]
+                ))
+                .toList();
+
+        return new PageImpl<>(responses, pageable, expiredBooks.getTotalElements());
+    }
 }
