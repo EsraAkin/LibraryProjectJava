@@ -24,7 +24,7 @@ public class PublisherController {
         return publisherService.savePublisher(publisherRequest);
     }
 
-    @GetMapping("/publishers")
+    @GetMapping
     public ResponseEntity<Page<PublisherResponse>> getAllPublishers(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "20") int size,
@@ -35,14 +35,14 @@ public class PublisherController {
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping("publishers/{publisherId}")
+    @GetMapping("/{publisherId}")
     public ResponseMessage<PublisherResponse> getPublisherById(@PathVariable Long publisherId) {
         return publisherService.getPublisherByIdRes(publisherId);
 
     }
 
     @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
-    @PutMapping("publishers/{publisherId}")
+    @PutMapping("/{publisherId}")
     public ResponseMessage<PublisherResponse> updatePublisher(@RequestBody @Valid PublisherRequest publisherRequest,
                                                               @PathVariable Long publisherId) {
         return publisherService.updatePublisher(publisherRequest, publisherId);
@@ -51,7 +51,7 @@ public class PublisherController {
 
 
     @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
-    @DeleteMapping("publishers/{publisherId}")
+    @DeleteMapping("/{publisherId}")
     public ResponseMessage<PublisherResponse> deletePublisher(@PathVariable Long publisherId) {
         return publisherService.deletePublisher(publisherId);
 

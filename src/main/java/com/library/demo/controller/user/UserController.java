@@ -3,7 +3,6 @@ package com.library.demo.controller.user;
 import com.library.demo.payload.request.user.UserRequest;
 import com.library.demo.payload.request.user.UserSaveRequest;
 import com.library.demo.payload.request.user.UserUpdateRequest;
-import com.library.demo.payload.response.businnes.LoanResponse;
 import com.library.demo.payload.response.businnes.ResponseMessage;
 import com.library.demo.payload.response.businnes.UserLoanResponse;
 import com.library.demo.payload.response.user.UserResponse;
@@ -35,7 +34,7 @@ public class UserController {
     }
 
     @PreAuthorize("hasAnyAuthority('ROLE_ADMIN', 'ROLE_STAFF', 'ROLE_MEMBER')")
-    @PostMapping("/user")
+    @GetMapping("/profile")
     public ResponseMessage<UserResponse> getAuthenticatedUser(Authentication authentication) {
         return userService.getUserProfile(authentication);
 
@@ -43,7 +42,7 @@ public class UserController {
 
 
     @PreAuthorize("hasAnyAuthority('ROLE_ADMIN', 'ROLE_STAFF', 'ROLE_MEMBER')")
-    @GetMapping("/user/loans")
+    @GetMapping("/loans")
     public ResponseEntity<Page<UserLoanResponse>> getUserLoans(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "20") int size,
@@ -58,7 +57,7 @@ public class UserController {
 
 
     @PreAuthorize("hasAnyAuthority('ROLE_ADMIN', 'ROLE_STAFF')")
-    @GetMapping("/users")
+    @GetMapping
     public Page<UserResponse> getUsers(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "20") int size,
@@ -71,7 +70,7 @@ public class UserController {
     }
 
 
-    @GetMapping("/users/{userId}")
+    @GetMapping("/{userId}")
     @PreAuthorize("hasAnyAuthority('ROLE_ADMIN', 'ROLE_STAFF')")
     public ResponseMessage<UserResponse> getUserById(@PathVariable @Valid Long userId) {
         return userService.getUserById(userId);
@@ -79,14 +78,14 @@ public class UserController {
     }
 
 
-    @PostMapping("users")
+    @PostMapping
     @PreAuthorize("hasAnyAuthority('ROLE_ADMIN', 'ROLE_STAFF')")
     public ResponseMessage<UserResponse> userSaveWithRole(@RequestBody @Valid UserSaveRequest userSaveRequest,
                                                           Authentication authentication) {
         return userService.saveUserWithRole(userSaveRequest, authentication);
     }
 
-    @PutMapping("/users/{user_id}")
+    @PutMapping("/{user_id}")
     @PreAuthorize("hasAnyAuthority('ROLE_ADMIN', 'ROLE_STAFF', 'ROLE_MEMBER')")
     public ResponseMessage<UserResponse> updateUserById(@Valid @RequestBody UserUpdateRequest userUpdateRequest,
                                                         @PathVariable("user_id") Long userId,
@@ -95,13 +94,11 @@ public class UserController {
     }
 
 
-    @DeleteMapping("/users/{user_id}")
+    @DeleteMapping("/{user_id}")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseMessage<UserResponse> deleteUser(@PathVariable Long user_id) {
         return userService.deleteUserById(user_id);
     }
-
-
 
 
 }

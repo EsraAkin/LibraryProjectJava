@@ -1,9 +1,7 @@
 package com.library.demo.controller.businnes;
 
 import com.library.demo.payload.request.businnes.AuthorRequest;
-import com.library.demo.payload.request.businnes.PublisherRequest;
 import com.library.demo.payload.response.businnes.AuthorResponse;
-import com.library.demo.payload.response.businnes.PublisherResponse;
 import com.library.demo.payload.response.businnes.ResponseMessage;
 import com.library.demo.service.businnes.AuthorService;
 import jakarta.validation.Valid;
@@ -21,13 +19,13 @@ public class AuthorController {
     private final AuthorService authorService;
 
     @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
-    @PostMapping("/authors")
+    @PostMapping
     public ResponseMessage<AuthorResponse> saveAuthor(@RequestBody @Valid AuthorRequest authorRequest) {
         return authorService.saveAuthor(authorRequest);
 
     }
 
-    @GetMapping("/authors")
+    @GetMapping
     public ResponseEntity<Page<AuthorResponse>> pageableAuthor(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "20") int size,
@@ -39,13 +37,13 @@ public class AuthorController {
 
     }
 
-    @GetMapping("/authors/{authorId}")
+    @GetMapping("/{authorId}")
     public ResponseMessage<AuthorResponse> getByIdAuthor(@PathVariable Long authorId) {
         return authorService.getAuthorByIdRes(authorId);
     }
 
     @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
-    @PutMapping("/authors/{authorId}")
+    @PutMapping("/{authorId}")
     public ResponseMessage<AuthorResponse> updateAuthor(@RequestBody @Valid AuthorRequest authorRequest,
                                                         @PathVariable Long authorId) {
         return authorService.updateAuthor(authorRequest, authorId);
@@ -53,7 +51,7 @@ public class AuthorController {
     }
 
     @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
-    @DeleteMapping("/authors/{authorId}")
+    @DeleteMapping("/{authorId}")
     public ResponseMessage<AuthorResponse> deleteAuthor(@PathVariable Long authorId){
         return authorService.deleteAuthor(authorId);
     }

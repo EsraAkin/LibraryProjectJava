@@ -3,7 +3,6 @@ package com.library.demo.controller.businnes;
 import com.library.demo.payload.request.businnes.LoanRequest;
 import com.library.demo.payload.request.businnes.LoanUpdateRequest;
 import com.library.demo.payload.response.businnes.LoanResponse;
-import com.library.demo.payload.response.businnes.ResponseMessage;
 import com.library.demo.service.businnes.LoanService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +20,7 @@ public class LoanController {
     private final LoanService loanService;
 
 
-    @GetMapping("/loans")
+    @GetMapping
     @PreAuthorize("hasAnyAuthority('ROLE_MEMBER', 'ROLE_STAFF', 'ROLE_ADMIN')")
     public ResponseEntity<Page<LoanResponse>> getAllLoansOfAuthenticatedUser(
             @RequestParam(defaultValue = "0") int page,
@@ -34,7 +33,7 @@ public class LoanController {
         return ResponseEntity.ok(responses);
     }
 
-    @GetMapping("/loans/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<LoanResponse> getLoanById(
             @PathVariable Long id,
             Authentication authentication) {
@@ -44,7 +43,7 @@ public class LoanController {
     }
 
     @PreAuthorize("hasAnyAuthority('ROLE_STAFF', 'ROLE_ADMIN')")
-    @GetMapping("/user/{userId}")
+    @GetMapping("/{userId}")
     public Page<LoanResponse> getLoansByUserId(
             @PathVariable Long userId,
             @RequestParam(defaultValue = "0") int page,
@@ -76,7 +75,7 @@ public class LoanController {
     }
 
     @PreAuthorize("hasAnyAuthority('ROLE_ADMIN', 'ROLE_STAFF')")
-    @PostMapping("/loans")
+    @PostMapping
     public ResponseEntity<LoanResponse> createLoan(
             @Valid @RequestBody LoanRequest loanRequest,
             Authentication authentication) {
@@ -88,7 +87,7 @@ public class LoanController {
 
 
     @PreAuthorize("hasAnyAuthority('ROLE_ADMIN', 'ROLE_STAFF')")
-    @PutMapping("/loans/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<LoanResponse> updateLoan(
             @PathVariable Long id,
             @RequestBody @Valid LoanUpdateRequest loanUpdateRequest,

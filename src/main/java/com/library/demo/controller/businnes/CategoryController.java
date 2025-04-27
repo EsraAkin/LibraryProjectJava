@@ -7,7 +7,6 @@ import com.library.demo.service.businnes.CategoryService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -20,12 +19,12 @@ public class CategoryController {
     private final CategoryService categoryService;
 
     @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
-    @PostMapping("/categories")
+    @PostMapping
     public ResponseMessage<CategoryResponse> saveCategory(@RequestBody @Valid CategoryRequest categoryRequest) {
         return categoryService.saveCategory(categoryRequest);
     }
 
-    @GetMapping("/categories")
+    @GetMapping
     public ResponseEntity<Page<CategoryResponse>> pageableCategory(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "20") int size,
@@ -36,14 +35,14 @@ public class CategoryController {
         return ResponseEntity.ok(responses);
     }
 
-    @GetMapping("/categories/{categoryId}")
+    @GetMapping("/{categoryId}")
     public ResponseMessage<CategoryResponse> getByIdCategory(@PathVariable Long categoryId){
         return categoryService.getCategoryByIdRes(categoryId);
 
     }
 
     @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
-    @PutMapping("/categories/{categoryId}")
+    @PutMapping("/{categoryId}")
     public ResponseMessage<CategoryResponse> updateCategory(@RequestBody @Valid CategoryRequest categoryRequest,
                                                             @PathVariable Long categoryId){
         return categoryService.updateCategory(categoryRequest, categoryId);
@@ -51,7 +50,7 @@ public class CategoryController {
     }
 
     @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
-    @DeleteMapping("/categories/{categoryId}")
+    @DeleteMapping("/{categoryId}")
     public ResponseMessage<CategoryResponse> deleteCategory(@PathVariable Long categoryId){
         return categoryService.deleteCategory(categoryId);
 
