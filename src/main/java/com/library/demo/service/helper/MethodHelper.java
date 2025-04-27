@@ -60,21 +60,21 @@ public class MethodHelper {
         boolean isStaff = currentUser.getRoles().stream()
                 .anyMatch(role -> role.getName().equals("STAFF"));
 
-        // Admin her kullanıcıyı güncelleyebilir
+        // Admin can update any user
         if (isAdmin) return;
 
-        // Staff sadece MEMBER kullanıcılarını güncelleyebilir
+        // Staff can only update MEMBER users
         if (isStaff && targetUser.getRoles().stream()
                 .allMatch(role -> role.getName().equals("MEMBER"))) {
             return;
         }
 
-        // Kullanıcı kendini güncelliyor mu?
+        // Does the user update herself?
         if (currentUser.getId().equals(targetUser.getId())) {
             return;
         }
 
-        // Diğer durumlar: yetki yok
+        // Other cases: no authorization
         throw new SecurityException(ErrorMessages.NOT_PERMITTED_METHOD_MESSAGE);
 
     }
@@ -92,7 +92,6 @@ public class MethodHelper {
                 .anyMatch(userRole -> Arrays.asList(roles).contains(userRole));
     }
 
-// MethodHelper.java
 
     public User getAuthenticatedUser(Authentication authentication) {
         return loadByEmail(((UserDetailsImpl) authentication.getPrincipal()).getEmail());

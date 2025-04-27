@@ -45,19 +45,19 @@ public class UserService {
         //validation
         userUniquePropertyValidator.checkDublication(userRequest.getPhone(), userRequest.getEmail());
 
-        // 2. Mapleme: UserRequest -> User entity
+        // 2. Mapping: UserRequest -> User entity
         User user = userMappers.mapUserRequestToUser(userRequest);
 
-        // 3. Default rolü ata
+        // 3. Assign default role
         Role defaultRole = roleRepository.findByName("MEMBER")
                 .orElseThrow(() -> new RuntimeException("Default rol bulunamadı: MEMBER"));
         user.setRoles(Set.of(defaultRole));
 
 
-        // 5. Kaydet
+        // 5. Save
         User savedUser = userRepository.save(user);
 
-        // 6. Response döndür
+        // 6. Return Response
         return ResponseMessage.<UserResponse>builder()
                 .message(SuccessMessages.USER_CREATE)
                 .returnBody(userMappers.mapUserToUserResponse(savedUser))
@@ -94,10 +94,10 @@ public class UserService {
 
     public ResponseMessage<UserResponse> saveUserWithRole(@Valid UserSaveRequest userSaveRequest,
                                                           Authentication authentication) {
-        // Mevcut kullanıcıyı al (admin mi staff mı?)
+        // Get current user (admin or staff?)
         User currentUser = methodHelper.loadByEmail(((UserDetailsImpl) authentication.getPrincipal()).getEmail());
 
-        // Girilen role id’leri ile roller alınıyor
+        // Get roles with entered role ids
         Set<Role> rolesToAssign = userSaveRequest.getRoleIdList().stream()
                 .map(id -> roleRepository.findById(id)
                         .orElseThrow(() -> new ResourceNotFoundException(String.format(ErrorMessages.ROLE_NOT_FOUND) + id)))
@@ -107,17 +107,17 @@ public class UserService {
                 .map(Role::getName)
                 .collect(Collectors.toSet());
 
-        // Yetki kontrolü
+        // Authority check
         methodHelper.checkStaffCannotAssignAdminOrStaffRoles(currentUser, roleNames);
 
-        // Benzersizlik kontrolü
+        // Unique check
         userUniquePropertyValidator.checkDublication(userSaveRequest.getPhone(), userSaveRequest.getEmail());
 
-        // Kullanıcı nesnesi oluştur
+        // Create user object
         User user = userMappers.mapUserRequestToUser(userSaveRequest);
         user.setRoles(rolesToAssign);
 
-        // Kaydet
+        // Save
         User savedUser = userRepository.save(user);
 
         return ResponseMessage.<UserResponse>builder()
@@ -132,23 +132,23 @@ public class UserService {
                                                         Long userId,
                                                         Authentication authentication) {
 
-        // Güncellenecek kullanıcıyı getir
+        // Get the user to update
         User userToUpdate = methodHelper.getUser(userId);
 
-        // Giriş yapan kullanıcıyı getir
+        // Get the logged in user
         User currentUser = methodHelper.loadByEmail(
                 ((UserDetailsImpl) authentication.getPrincipal()).getEmail());
 
-        // Yetki kontrolü yap
+        //Check authorization
         methodHelper.validateUserUpdatePermission(currentUser, userToUpdate);
 
-        // Benzersizlik kontrolü
+        // Unique check
         userUniquePropertyValidator.checkUniqueProperty(userToUpdate, userUpdateRequest);
 
-        // Güncellenebilir alanları set et
+        // Set updateable fields
         userMappers.updateUserFromUserUpdateRequest(userUpdateRequest, userToUpdate);
 
-        // Güncellenmiş kullanıcıyı kaydet
+        // Save updated user
         User updatedUser = userRepository.save(userToUpdate);
 
         return ResponseMessage.<UserResponse>builder()

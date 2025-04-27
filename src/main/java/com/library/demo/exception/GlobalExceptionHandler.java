@@ -1,6 +1,5 @@
 package com.library.demo.exception;
 
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -11,15 +10,6 @@ import java.util.Map;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
-
-//    @ExceptionHandler(DataIntegrityViolationException.class)
-//    public ResponseEntity<Map<String, String>> handleDataIntegrityViolationException(DataIntegrityViolationException ex) {
-//        Map<String, String> error = new HashMap<>();
-//        error.put("error", "Conflict");
-//        error.put("message", "Email or phone number already exists.");
-//        return new ResponseEntity<>(error, HttpStatus.CONFLICT);
-//    }
-
 
 
     @ExceptionHandler(ConflictException.class)
@@ -38,13 +28,6 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
     }
 
-//    @ExceptionHandler(Exception.class)
-//    public ResponseEntity<Map<String, String>> handleAll(Exception ex) {
-//        Map<String, String> error = new HashMap<>();
-//        error.put("error", "Unexpected Error");
-//        error.put("message", ex.toString()); // DÜZELTİLDİ
-//        return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
-//    }
 
 
     @ExceptionHandler(MethodArgumentNotValidException.class)

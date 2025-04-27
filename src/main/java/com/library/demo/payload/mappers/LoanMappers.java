@@ -74,7 +74,7 @@ public class LoanMappers {
                 )
 
 
-                // Loan ile ilgili alanlar
+                // Loan related fields
                 .bookId(loan.getBook() != null ? loan.getBook().getId() : null)
                 .build();
     }

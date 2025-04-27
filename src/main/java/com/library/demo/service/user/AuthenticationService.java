@@ -36,7 +36,7 @@ public class AuthenticationService {
     Authentication authentication = authenticationManager.authenticate(
         new UsernamePasswordAuthenticationToken(email, password));
 
-    //security authentication bu satirda yapiliyor
+    //security authentication
     SecurityContextHolder.getContext().setAuthentication(authentication);
 
     String token = jwtUtils.generateToken(authentication);

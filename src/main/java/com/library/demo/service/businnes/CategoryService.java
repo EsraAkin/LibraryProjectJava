@@ -113,7 +113,7 @@ public class CategoryService {
         //exist Category DB
         Category existingCategory = getCategoryById(categoryId);
 
-        // Eğer kategoriye bağlı kitaplar varsa, silinemez
+        // If there are books attached to the category, it cannot be deleted
         if (existingCategory.getBooks() != null && !existingCategory.getBooks().isEmpty()) {
             throw new ConflictException("This category cannot be deleted because it has associated books.");
         }

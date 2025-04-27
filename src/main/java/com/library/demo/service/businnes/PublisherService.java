@@ -61,23 +61,23 @@ public class PublisherService {
 
     public ResponseMessage<PublisherResponse> updatePublisher(@Valid PublisherRequest publisherRequest, Long publisherId) {
 
-        // 1. Mevcut publisher'ı getir
+        // 1. Get current publisher
         Publisher existingPublisher = getPublisherById(publisherId);
 
-        // 2. Built-in publisher ise güncellenemez
+        // 2. If it is a built-in publisher, it cannot be updated.
         if (Boolean.TRUE.equals(existingPublisher.getBuiltIn())) {
             throw new ConflictException(ErrorMessages.NOT_PERMITTED_METHOD_MESSAGE);
         }
 
-        // 3. Güncelleme işlemi
+        // 3. Updating
         existingPublisher.setName(publisherRequest.getName());
 
         existingPublisher.setId(publisherId);
 
-        // 4. Veritabanına kaydet
+        // 4. Save To DB
         Publisher updatedPublisher = publisherRepository.save(existingPublisher);
 
-        // 5. DTO'ya çevirip döndür
+        // 5. Convert to DTO and return
         return ResponseMessage.<PublisherResponse>builder()
                 .message(SuccessMessages.PUBLISHER_UPDATE)
                 .httpStatus(HttpStatus.OK)
@@ -86,10 +86,10 @@ public class PublisherService {
     }
 
     public ResponseMessage<PublisherResponse> deletePublisher(Long publisherId) {
-        // 1. Mevcut publisher'ı getir
+        // 1. Get current publisher
         Publisher existingPublisher = getPublisherById(publisherId);
 
-        //2. sil
+        //2. delete map and return
         publisherRepository.deleteById(publisherId);
         return ResponseMessage.<PublisherResponse>builder()
                 .message(SuccessMessages.PUBLISHER_DELETE)

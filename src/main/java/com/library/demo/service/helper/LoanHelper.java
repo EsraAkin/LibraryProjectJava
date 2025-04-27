@@ -69,26 +69,26 @@ public class LoanHelper {
 
     public void handleBookReturnAndScoreUpdate(Loan loan) {
 
-        // Eğer kitap zaten iade edilmişse hata fırlatılır
+        // If the book has already been returned an error is thrown
         if (loan.isReturned()) {
             throw new ConflictException(ErrorMessages.LOAN_ALREADY_RETURNED);
         }
 
-        // Kitap iade ediliyor
+        // The book is being returned
         loan.setReturnDate(LocalDateTime.now());
         loan.setReturned(true);
 
-        // Skor güncelleniyor
+        // Skor updating
         boolean onTime = loan.getReturnDate().isBefore(loan.getExpireDate());
         int currentScore = loan.getUser().getScore();
         loan.getUser().setScore(onTime ? currentScore + 1 : currentScore - 1);
 
-        // Kitap tekrar ödünç alınabilir hale geliyor
+        // The book becomes available for borrowing again
         loan.getBook().setLoanable(true);
     }
 
 
-    // LoanUpdateService.java - Kitap iade edilince skorun güncellenmesi
+    // Updating the score when the book is returned
     public void returnLoan(Long loanId, Authentication authentication) {
         Loan loan = loanRepository.findById(loanId)
                 .orElseThrow(() -> new ResourceNotFoundException(ErrorMessages.LOAN_NOT_FOUND));
@@ -103,23 +103,23 @@ public class LoanHelper {
             throw new ConflictException(ErrorMessages.LOAN_ALREADY_RETURNED);
         }
 
-        // Kitap iade ediliyor
+        // The book is being returned
         loan.setReturnDate(LocalDate.now().atStartOfDay());
         loan.setReturned(true);
 
-        // Skor güncelleme
+        // Skor update
         boolean onTime = loan.getReturnDate().isBefore(loan.getExpireDate());
         int currentScore = loan.getUser().getScore();
         loan.getUser().setScore(onTime ? currentScore + 1 : currentScore - 1);
 
-        // Kitap tekrar ödünç alınabilir hale gelir
+        // The book becomes available for borrowing again
         loan.getBook().setLoanable(true);
 
         loanRepository.save(loan);
     }
 
 
-    // LoanCreateService.java - Kitap ödünç alma sırasında LoanHelper kullanımı
+    //  borrowing books
     public Loan createLoan(LoanRequest request) {
         User user = methodHelper.getUser(request.getUserId());
         Book book = methodHelper.getBook(request.getBookId());

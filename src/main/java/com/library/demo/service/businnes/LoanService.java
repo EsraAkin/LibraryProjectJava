@@ -59,54 +59,54 @@ public class LoanService {
 
     public LoanResponse getLoanOfAuthenticatedUser(Long loanId, Authentication authentication) {
 
-        // 1. Loan var mı kontrolü
+        // 1. Check if there is a loan
         Loan loan = loanRepository.findById(loanId)
                 .orElseThrow(() -> new ResourceNotFoundException(ErrorMessages.LOAN_NOT_FOUND));
 
-        // 2. Giriş yapan kullanıcıyı getir
+        // 2. Get the logged in user
         User currentUser = methodHelper.loadByEmail(
                 ((UserDetailsImpl) authentication.getPrincipal()).getEmail()
         );
 
-        // 3. Sahiplik veya rol kontrolü (ya kendisi olmalı ya da admin/employee)
+        // 3. Ownership or role control (must be either self or admin/employee)
         if (!loan.getUser().getId().equals(currentUser.getId()) &&
                 !methodHelper.hasAnyRole(currentUser, "ADMIN", "EMPLOYEE")) {
             throw new SecurityException(ErrorMessages.NOT_PERMITTED_METHOD_MESSAGE);
         }
 
-        // 4. Notes alanı gösterilmeli mi?
+        // 4. Should the Notes field be displayed?
         boolean isPrivileged = methodHelper.hasAnyRole(currentUser, "ADMIN", "EMPLOYEE");
 
-        // 5. Response dön
+        // 5. Return Response
         return loanMappers.mapLoanToLoanResponse(loan, isPrivileged);
     }
 
     public Page<LoanResponse> getLoansByUserId(Long userId, int page, int size, String sort, String type) {
 
-        // Kullanıcının var olup olmadığını kontrol et
+        // Get the logged in user
         User user = methodHelper.getUser(userId);
 
-        // Sıralama yönünü belirle
+        // Sorting direction
         Sort.Direction direction = type.equalsIgnoreCase("asc") ? Sort.Direction.ASC : Sort.Direction.DESC;
         Pageable pageable = PageRequest.of(page, size, Sort.by(direction, sort));
 
-        // Loan'ları getir
+        // Get the Loan
         Page<Loan> loans = loanRepository.findByUserId(userId, pageable);
 
-        // Mapper ile dönüştür
-        return loans.map(loan -> loanMappers.mapLoanToLoanResponse(loan, true)); // Admin kontrolü gerekmez, true sabit verilir
+        // Mapping
+        return loans.map(loan -> loanMappers.mapLoanToLoanResponse(loan, true)); // No admin control required, true constant is given
     }
 
     public Page<LoanResponse> getAllLoansOfBook(Long bookId, int page, int size, String sort, String type) {
 
-        // Sıralama tipi belirleniyor
+        // Sorting type
         Sort.Direction direction = type.equalsIgnoreCase("asc") ? Sort.Direction.ASC : Sort.Direction.DESC;
         Pageable pageable = PageRequest.of(page, size, Sort.by(direction, sort));
 
-        // Kitabın ödünç kayıtları alınıyor
+        // Get book loan records
         Page<Loan> loans = loanRepository.findByBookId(bookId, pageable);
 
-        // Her loan için LoanResponse'a mapleniyor (user bilgisi ile birlikte)
+        // Maple to LoanResponse for each loan (with user information)
         return loans.map(loan -> loanMappers.mapLoanToLoanResponse(loan, true)); // `true` => user görünsün
 
     }
@@ -115,71 +115,71 @@ public class LoanService {
         Loan loan = loanRepository.findById(loanId)
                 .orElseThrow(() -> new ResourceNotFoundException(ErrorMessages.LOAN_NOT_FOUND));
 
-        // Admin/Employee olduğu için detaylar tam dönüyor
+        // Since it is Admin/Employee, the details are complete.
         return loanMappers.mapLoanToLoanResponse(loan, true);
     }
 
     public LoanResponse createLoan(LoanRequest request, Authentication authentication) {
 
-        // 1. Giriş yapan kullanıcıyı getir
+        // 1.Get the logged in user
         User currentUser = methodHelper.loadByEmail(
                 ((UserDetailsImpl) authentication.getPrincipal()).getEmail()
         );
 
-        // 2. Hedef kullanıcıyı getir
+        // 2. Get target user
         User user = methodHelper.getUser(request.getUserId());
 
-        // 3. Yetki kontrolü
+        // 3. Authorization control
         methodHelper.validateUserUpdatePermission(currentUser, user);
 
-        // 4. Kitabı getir
+        // 4. Get the Book
         Book book = methodHelper.getBook(request.getBookId());
 
-        // 5. İş kurallarını kontrol et
+        // 5. Check endpoint rules
         loanHelper.checkIfBookIsLoanable(book);
         loanHelper.checkIfUserHasOverdueLoans(user);
         loanHelper.checkUserLoanLimit(user);
 
-        // 6. Süre hesapla
+        // 6. Time calculate
         LocalDateTime loanDate = LocalDateTime.now();
         LocalDateTime expireDate = loanHelper.calculateExpireDate(user);
 
-        // 7. Loan objesini mapper ile oluştur
+        // 7. Create Loan objesini with mapper
         Loan loan = loanMappers.mapLoanRequestToLoan(request, user, book, loanDate, expireDate);
 
-        // 8. Kitap artık ödünç alınamaz
+        // 8. The book can no longer be borrowed
         book.setLoanable(false);
 
-        // 9. Loan kaydet
+        // 9. Loan save
         Loan savedLoan = loanRepository.save(loan);
 
-        // 10. Yetki bilgisi
+        // 10. Authorization information
         boolean isPrivileged = methodHelper.hasAnyRole(currentUser, "ADMIN", "STAFF");
 
-        // 11. Response dön
+        // 11. Return Response
         return loanMappers.mapLoanToLoanResponse(savedLoan, isPrivileged);
     }
 
     public LoanResponse updateLoan(Long id, @Valid LoanUpdateRequest loanUpdateRequest, Authentication authentication) {
 
-        // 1. Loan nesnesini getir
+        // 1. Get Loan object
         Loan loan = loanHelper.getLoanById(id);
 
-        // 2. returnDate null değilse kitap iade ediliyor demektir
+        // 2. If returnDate is not null, the book is being returned.
         if (loanUpdateRequest.getReturnDate() != null) {
 
-            // Aynı kitap daha önce iade edilmişse işlem yapılamaz
+            // If the same book has been returned before, no action can be taken.
             if (loan.isReturned()) {
                 throw new ConflictException(ErrorMessages.LOAN_ALREADY_RETURNED);
             }
 
-            // Kitap iade ediliyor
+            // The book is being returned
             loan.setReturnDate(loanUpdateRequest.getReturnDate().atStartOfDay());
 
             loan.setReturned(true);
             loan.getBook().setLoanable(true);
 
-            // Skor güncelleme
+            // Skor update
             boolean onTime = !loan.getExpireDate()
                     .toLocalDate()
                     .isBefore(loan.getReturnDate().toLocalDate());
@@ -188,18 +188,18 @@ public class LoanService {
             loan.getUser().setScore(onTime ? currentScore + 1 : currentScore - 1);
 
         } else {
-            // Sadece expireDate ve notes güncelleniyor
+            // Only expireDate und notes are updating
             loan.setExpireDate(loanUpdateRequest.getExpireDate().atStartOfDay());
 
         }
 
-        // Notlar her iki durumda da güncellenebilir
+        // Notes can be updated in both cases
         loan.setNotes(loanUpdateRequest.getNotes());
 
-        // Veritabanına kaydet
+        // Save to DB
         loanRepository.save(loan);
 
-        // DTO'ya çevirip dön
+        // map  DTO and return
         return loanMappers.mapLoanToLoanResponse(loan);
 
     }
@@ -209,16 +209,16 @@ public class LoanService {
 
         User user = methodHelper.getAuthenticatedUser(authentication);
 
-        // Pageable oluştur
+        // Create Pageable
         Sort.Direction direction = type.equalsIgnoreCase("desc") ? Sort.Direction.DESC : Sort.Direction.ASC;
         Pageable pageable = PageRequest.of(page, size, Sort.by(direction, sort));
 
-        // Kullanıcının loan'larını getir
+        // Get User's Loans
         Page<Loan> userLoans = loanRepository.findByUserId(user.getId(), pageable);
         System.out.println("Loan bulunma sayısı: " + userLoans.getTotalElements());
         userLoans.forEach(loan -> System.out.println("Loan ID: " + loan.getId()));
 
-        // Loan'ları UserLoanResponse'a map et ve dön
+        // Map Loans to UserLoanResponse and return
         return userLoans.map(loanMappers::mapLoanToUserLoanResponse);
     }
 
