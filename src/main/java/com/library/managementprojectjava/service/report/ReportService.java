@@ -1,10 +1,16 @@
 package com.library.managementprojectjava.service.report;
 
+import com.library.managementprojectjava.payload.response.report.PopularBookResponse;
 import com.library.managementprojectjava.payload.response.report.ReportResponse;
 import com.library.managementprojectjava.repository.businnes.*;
 import com.library.managementprojectjava.repository.user.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -28,4 +34,22 @@ public class ReportService {
 
         return new ReportResponse(books, authors, publishers, categories, loans, unReturnedBooks, expiredBooks, members);
     }
+
+    public Page<PopularBookResponse> getMostPopularBooks(Pageable pageable) {
+        Page<Object[]> popularBooks = loanRepository.findMostPopularBooks(pageable);
+
+        List<PopularBookResponse> responseList = popularBooks
+                .stream()
+                .map(obj -> new PopularBookResponse(
+                        ((Number) obj[0]).longValue(),
+                        (String) obj[1],
+                        (String) obj[2]
+                ))
+                .toList();
+
+        return new PageImpl<>(responseList, pageable, popularBooks.getTotalElements());
+    }
+
+
+
 }

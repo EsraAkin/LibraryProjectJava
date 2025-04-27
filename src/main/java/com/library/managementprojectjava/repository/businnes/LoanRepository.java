@@ -25,6 +25,12 @@ public interface LoanRepository extends JpaRepository<Loan, Long> {
     @Query("SELECT COUNT(l) FROM Loan l WHERE l.expireDate < CURRENT_DATE AND l.returnDate IS NULL")
     long countExpiredBooks();
 
+    @Query("SELECT l.book.id, l.book.name, l.book.isbn " +
+            "FROM Loan l " +
+            "GROUP BY l.book.id, l.book.name, l.book.isbn " +
+            "ORDER BY COUNT(l.id) DESC")
+    Page<Object[]> findMostPopularBooks(Pageable pageable);
+
 
 
 }
