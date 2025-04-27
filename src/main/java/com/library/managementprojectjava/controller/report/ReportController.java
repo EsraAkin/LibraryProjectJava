@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -40,6 +41,23 @@ public class ReportController {
         return ResponseEntity.ok(response);
     }
 
+    @GetMapping("/unreturned-books")
+    @PreAuthorize("hasAnyAuthority('ROLE_STAFF', 'ROLE_ADMIN')")
+    public ResponseEntity<Page<PopularBookResponse>> getUnreturnedBooks(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "20") int size,
+            @RequestParam(defaultValue = "expireDate") String sort,
+            @RequestParam(defaultValue = "desc") String type
+    ) {
+        Pageable pageable = PageRequest.of(
+                page,
+                size,
+                type.equalsIgnoreCase("desc") ? Sort.by(sort).descending() : Sort.by(sort).ascending()
+        );
+
+        Page<PopularBookResponse> response = reportService.getUnreturnedBooks(pageable);
+        return ResponseEntity.ok(response);
+    }
 
 
 

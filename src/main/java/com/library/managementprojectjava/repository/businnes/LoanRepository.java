@@ -32,5 +32,10 @@ public interface LoanRepository extends JpaRepository<Loan, Long> {
     Page<Object[]> findMostPopularBooks(Pageable pageable);
 
 
+    @Query("SELECT l.book.id, l.book.name, l.book.isbn " +
+            "FROM Loan l " +
+            "WHERE l.returned = false")
+    Page<Object[]> findUnreturnedBooks(Pageable pageable);
+
 
 }

@@ -51,5 +51,18 @@ public class ReportService {
     }
 
 
+    public Page<PopularBookResponse> getUnreturnedBooks(Pageable pageable) {
+        Page<Object[]> unreturnedBooks = loanRepository.findUnreturnedBooks(pageable);
 
+        List<PopularBookResponse> response = unreturnedBooks
+                .stream()
+                .map(obj -> new PopularBookResponse(
+                        ((Number) obj[0]).longValue(),
+                        (String) obj[1],
+                        (String) obj[2]
+                ))
+                .toList();
+
+        return new PageImpl<>(response, pageable, unreturnedBooks.getTotalElements());
+    }
 }
